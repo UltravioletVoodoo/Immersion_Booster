@@ -21,32 +21,35 @@ export default function ImageField() {
 
     
     function addImage(source) {
-
-        function swapFadeIn() {
+        function setAndShow() {
             setImageSource(source)
             setFadeStyle('show')
         }
 
-        if (fadeStyle !== '') {
-            const transition = document.querySelector('.centerImage')
-            transition.addEventListener('transitionend', swapFadeIn)
-            setFadeStyle('')
-            return () => { transition.removeEventListener('transitionend', swapFadeIn)}
-        } else {
-            console.log("why am I being called? wtf")
-            swapFadeIn()
+        if (fadeStyle === '') {
+            setAndShow()
+            return
         }
+
+        const transition = document.querySelector('.centerImage')
+        function setAndShowAndRemoveTransition() {
+            setAndShow()
+            transition.removeEventListener('transitionend', setAndShowAndRemoveTransition)
+        }
+        transition.addEventListener('transitionend', setAndShowAndRemoveTransition)
+        setFadeStyle('')
     }
 
     function deleteImage() {
         if (fadeStyle === '') return
-        
         const transition = document.querySelector('.centerImage');
-        const remove = () => {
+
+        function remove() {
             setImageSource('')
             setFadeStyle('')
             transition.removeEventListener('transitionend', remove)
         }
+        
         transition.addEventListener('transitionend', remove)
         setFadeStyle('')
     }
