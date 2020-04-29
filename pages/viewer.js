@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Base from '../components/base'
 import css from "styled-jsx/css"
-import ImageField from '../components/imageField'
+import Field from '../components/field'
 
 
 const viewerCss = css`
@@ -29,8 +29,9 @@ export default function Viewer() {
             <Base />
             <h1>Viewer Page</h1>
             <div className="ImageField">
-                <ImageField imageName='CenterImage' />
+                <Field fieldName='CenterImage' type='image' />
             </div>
+            <Field fieldName='CenterImageLabel' type='label' />
             <style jsx>{viewerCss}</style>
         </div>
     )
