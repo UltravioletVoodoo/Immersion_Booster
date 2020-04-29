@@ -3,19 +3,20 @@ import css from "styled-jsx/css"
 
 
 const imageFieldCss = css`
-.centerImage {
+.Image {
     width: 40vw;
     height: 40vw;
     opacity: 0;
     transition: 1s;
 }
-.centerImage.show {
+.Image.show {
     opacity: 1;
 }
 `
 
 
-export default function ImageField() {
+export default function ImageField(props) {
+    const { imageName } = props
     const [imageSource, setImageSource] = useState(null)
     const [fadeStyle, setFadeStyle] = useState('')
 
@@ -31,7 +32,7 @@ export default function ImageField() {
             return
         }
 
-        const transition = document.querySelector('.centerImage')
+        const transition = document.querySelector('.Image')
         function setAndShowAndRemoveTransition() {
             setAndShow()
             transition.removeEventListener('transitionend', setAndShowAndRemoveTransition)
@@ -42,7 +43,7 @@ export default function ImageField() {
 
     function deleteImage() {
         if (fadeStyle === '') return
-        const transition = document.querySelector('.centerImage');
+        const transition = document.querySelector('.Image');
 
         function remove() {
             setImageSource('')
@@ -56,8 +57,8 @@ export default function ImageField() {
 
 
     useEffect(() => {
-        const addChannel = new BroadcastChannel("addCenterImage")
-        const deleteChannel = new BroadcastChannel("deleteCenterImage")
+        const addChannel = new BroadcastChannel(`add${imageName}`)
+        const deleteChannel = new BroadcastChannel(`delete${imageName}`)
         addChannel.onmessage = (e) => { addImage(e.data) }
         deleteChannel.onmessage = (e) => { deleteImage() }
 
@@ -70,7 +71,7 @@ export default function ImageField() {
 
     return (
         <div>
-            <img className={`centerImage ${fadeStyle}`} src={imageSource}></img>
+            <img className={`Image ${fadeStyle}`} src={imageSource}></img>
             <style jsx>{imageFieldCss}</style>
         </div>
     )

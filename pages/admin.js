@@ -11,7 +11,8 @@ export default function Admin() {
             </Head>
             <Base />
             <h1>Admin Page</h1>
-            <FieldEditor fieldName="CenterImage" />
+            <FieldEditor fieldName="CenterImage" placeHolder='Image URL' />
+            <FieldEditor fieldName="CenterImageLabel" placeHolder='Label Text' />
         </div>
     )
 }

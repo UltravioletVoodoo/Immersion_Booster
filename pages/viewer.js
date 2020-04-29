@@ -29,7 +29,7 @@ export default function Viewer() {
             <Base />
             <h1>Viewer Page</h1>
             <div className="ImageField">
-                <ImageField />
+                <ImageField imageName='CenterImage' />
             </div>
             <style jsx>{viewerCss}</style>
         </div>

@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 
 export default function FieldEditor(props) {
-    const { fieldName } = props
+    const { fieldName, placeHolder } = props
     const inputRef = useRef(null)
     let addChannel, deleteChannel
 
@@ -24,10 +24,10 @@ export default function FieldEditor(props) {
     }, [])
 
     return (
-        <span>
-            <input ref={inputRef} placeholder="test"></input>
+        <div>
+            <input ref={inputRef} placeholder={placeHolder}></input>
             <button onClick={updateField}>Update {fieldName}</button>
             <button onClick={deleteField}>Delete {fieldName}</button>
-        </span>
+        </div>
     )
 }
