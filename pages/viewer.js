@@ -13,10 +13,17 @@ const viewerCss = css`
     left: 0;
     background-color: #2e2e2e;
 }
-.ImageField {
-    position: absolute;
-    top: calc(50vh - 20vw);
-    left: 30vw;
+.CenterImage {
+    position: fixed;
+    top: 5vh;
+    text-align: center;
+    width: 100%;
+}
+.CenterImageLabel {
+    position: fixed;
+    top: 85vh;
+    text-align: center;
+    width: 100%;
 }
 `
 
@@ -27,11 +34,12 @@ export default function Viewer() {
                 <title>Immersion Viewer</title>
             </Head>
             <Base />
-            <h1>Viewer Page</h1>
-            <div className="ImageField">
+            <div className="CenterImage">
                 <Field fieldName='CenterImage' type='image' />
             </div>
-            <Field fieldName='CenterImageLabel' type='label' />
+            <div className='CenterImageLabel'>
+                <Field fieldName='CenterImageLabel' type='label' />
+            </div>
             <style jsx>{viewerCss}</style>
         </div>
     )

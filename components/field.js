@@ -8,15 +8,16 @@ img,p {
     transition: 1s;
 }
 .image {
-    width: 40vw;
-    height: 40vw;
+    width: auto;
+    height: 80vh;
 }
 .label {
-    color: purple;
+    color: yellow;
     font-size: 30px;
+    margin: 0px;
 }
 .show {
-    opacity: 1 !important;
+    opacity: 1;
 }
 `
 
