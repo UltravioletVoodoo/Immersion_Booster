@@ -7,11 +7,11 @@ img,p {
     opacity: 0;
     transition: 1s;
 }
-.image {
+.bigImage {
     width: auto;
     height: 80vh;
 }
-.label {
+.bigImageLabel {
     color: yellow;
     font-size: 30px;
     margin: 0px;
@@ -23,7 +23,7 @@ img,p {
 
 
 export default function Field(props) {
-    const { fieldName, type='image' } = props
+    const { fieldName, type='bigImage' } = props
     const [fieldValue, setFieldValue] = useState(null)
     const [fadeStyle, setFadeStyle] = useState('')
 
@@ -78,22 +78,22 @@ export default function Field(props) {
 
 
     switch(type) {
-        case 'image':
+        case 'bigImage':
             return (
                 <div>
-                    <img className={`image ${fadeStyle}`} src={fieldValue}></img>
+                    <img className={`bigImage ${fadeStyle}`} src={fieldValue}></img>
                     <style jsx>{imageFieldCss}</style>
                 </div>
             )
-        case 'label':
+        case 'bigImageLabel':
             return (
                 <div>
-                    <p className={`label ${fadeStyle}`}>{fieldValue}</p>
+                    <p className={`bigImageLabel ${fadeStyle}`}>{fieldValue}</p>
                     <style jsx>{imageFieldCss}</style>
                 </div>
             )
         default:
-            return
+            return null
     }
 
 }

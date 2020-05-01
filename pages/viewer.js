@@ -35,10 +35,10 @@ export default function Viewer() {
             </Head>
             <Base />
             <div className="CenterImage">
-                <Field fieldName='CenterImage' type='image' />
+                <Field fieldName='CenterImage' type='bigImage' />
             </div>
             <div className='CenterImageLabel'>
-                <Field fieldName='CenterImageLabel' type='label' />
+                <Field fieldName='CenterImageLabel' type='bigImageLabel' />
             </div>
             <style jsx>{viewerCss}</style>
         </div>
