@@ -1,17 +1,30 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import CampaignSimpleInput from "../../components/campaignSimpleInput";
+import CampaignPlayersInput from "../../components/campaignPlayersInput";
 
 export default function CampaignEditor() {
-    const [campaign, setCampaign] = useState(null)
+    const [campaign, setCampaign] = useState(undefined)
     
-    function loadCampaign() {
+    function saveDummyCampaign() {
         if (typeof window === 'undefined') return
-        setCampaign(JSON.parse(localStorage.getItem('campaign')))
+        const dummyCampaign = {
+            name: '',
+            players: [],
+            encounters: [],
+            combats: []
+        }
+        localStorage.setItem('campaign', JSON.stringify(dummyCampaign))
+        return dummyCampaign
     }
 
-    function setDummyData() {
+    function loadCampaign() {
         if (typeof window === 'undefined') return
-        localStorage.setItem('campaign', JSON.stringify({name: 'test campaign', encounters: ['1','2']}))
+        let campaign = localStorage.getItem('campaign')
+        if (!campaign) {
+            campaign = saveDummyCampaign()
+        }
+        setCampaign(campaign)
     }
 
     useEffect(() => {
@@ -23,8 +36,12 @@ export default function CampaignEditor() {
             <Link href="/admin">
                 <button>To Admin Dashboard</button>
             </Link>
-            <textarea value={JSON.stringify(campaign, undefined, 4)}></textarea>
-            <button onClick={setDummyData}>Set Dummy Data</button>
+            {campaign && (
+                <>
+                    <CampaignSimpleInput path={['name']} placeholder='Campaign Name' />
+                    <CampaignPlayersInput />
+                </>
+            )}
         </div>
     )
 }
