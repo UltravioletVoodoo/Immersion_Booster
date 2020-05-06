@@ -5,7 +5,7 @@ function getPathEnd(obj, path) {
     for (let pathComponent of path) {
         result = result[pathComponent]
     }
-    return result
+    return result ? result : ''
 }
 
 function deepSet(obj, path, value) {
@@ -41,7 +41,8 @@ export default function CampaignSimpleInput(props) {
     }
 
     function onInputChange(e) {
-        setInnerValue(e.target.value)
+        const newValue = e.target.value ? e.target.value : ''
+        setInnerValue(newValue)
     }
 
     useEffect(() => {
