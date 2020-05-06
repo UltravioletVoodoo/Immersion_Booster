@@ -9,6 +9,7 @@ function getPathEnd(obj, path) {
 }
 
 function deepSet(obj, path, value) {
+    console.log('test: ', obj, path, value)
     const pathCopy = [... path]
     const last = pathCopy.pop()
     for (let key of pathCopy) {
@@ -17,41 +18,32 @@ function deepSet(obj, path, value) {
     obj[last] = value
 }
 
+function saveData(newValue, path) {
+    if (typeof window === 'undefined') return
+    let campaign = JSON.parse(localStorage.getItem('campaign'))
+    deepSet(campaign, path, newValue)
+    localStorage.setItem('campaign', JSON.stringify(campaign))
+}
+
 export default function CampaignSimpleInput(props) {
     const { path, placeholder } = props
-    const [innerValue, setInnerValue] = useState('')
+    const [innerValue, setInnerValue] = useState(undefined)
 
     function loadInnerValue() {
         if (typeof window === 'undefined') return
         const campaign = JSON.parse(localStorage.getItem('campaign'))
-        setInnerValue(getPathEnd(campaign, path))
-    }
-
-    function unsavedData() {
-        if (typeof window === 'undefined') return
-        const campaign = JSON.parse(localStorage.getItem('campaign'))
-        return getPathEnd(campaign, path) !== innerValue
-    }
-
-    function saveData() {
-        if (typeof window === 'undefined' || !unsavedData()) return
-        let campaign = JSON.parse(localStorage.getItem('campaign'))
-        deepSet(campaign, path, innerValue)
-        localStorage.setItem('campaign', JSON.stringify(campaign))
+        const newValue = getPathEnd(campaign, path)
+        setInnerValue(newValue)
+        saveData(newValue, path)
     }
 
     function onInputChange(e) {
         const newValue = e.target.value ? e.target.value : ''
         setInnerValue(newValue)
+        saveData(newValue, path)
     }
 
-    useEffect(() => {
-        loadInnerValue()
-    }, [])
-
-    useEffect(() => {
-        saveData()
-    }, [innerValue])
+    useEffect(loadInnerValue, [])
 
     return (
         <div>
