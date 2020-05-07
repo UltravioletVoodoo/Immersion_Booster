@@ -1,4 +1,26 @@
 import { useState, useEffect } from "react"
+import css from "styled-jsx/css"
+
+
+const inputCss = css`
+.labelContainer {
+    display: inline-block;
+    width: 20%;
+}
+label {
+    font-size: 20px;
+    padding-right: 20px;
+}
+.inputContainer {
+    display: inline-block;
+}
+input {
+    width: 100%;
+    height: 20px;
+    border-radius: 5px;
+}
+`
+
 
 function getPathEnd(obj, path) {
     let result = obj
@@ -26,7 +48,7 @@ function saveData(newValue, path) {
 }
 
 export default function CampaignSimpleInput(props) {
-    const { path, placeholder } = props
+    const { path, placeholder, label=true } = props
     const [innerValue, setInnerValue] = useState(undefined)
 
     function loadInnerValue() {
@@ -48,9 +70,16 @@ export default function CampaignSimpleInput(props) {
     }, [])
 
     return (
-        <div>
-            <label>{placeholder}: </label>
-            <input placeholder={placeholder} value={innerValue} onChange={onInputChange}></input>
-        </div>
+        <>
+            {label && (
+                <div className='labelContainer'>
+                    <label>{placeholder}: </label>
+                </div>
+            )}
+            <div className='inputContainer' style={label ? {width: '80%'} : {width: '100%'}}>
+                <input placeholder={placeholder} value={innerValue} onChange={onInputChange}></input>
+            </div>
+            <style jsx>{inputCss}</style>
+        </>
     )
 }

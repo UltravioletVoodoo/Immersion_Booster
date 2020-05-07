@@ -1,5 +1,50 @@
 import { useState, useEffect } from "react"
 import CampaignSimpleInput from "./campaignSimpleInput"
+import css from "styled-jsx/css"
+
+
+const elementGroupCss = css`
+.elementGroup {
+    background-color: pink;
+    position: relative;
+    margin: 5px 0 5px 0;
+    padding: 20px;
+    box-shadow: 0 0 10px black;
+    transition: 0.3s;
+}
+.elementGroup:hover {
+    background-color: #f2c655;
+}
+.title {
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+.input {
+    margin: 0 0 5px 0;
+}
+`
+
+const inputSetCss = css`
+.inputSet {
+    background-color: lightsteelblue;
+    position: relative;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.addBtnContainer {
+    width: 100%;
+    text-align: center;
+}
+.addBtn {
+    width: 75%;
+    height: 35px;
+}
+.addBtn:hover {
+    border: 1px solid green;
+    color: green;
+}
+`
 
 
 function Player(props) {
@@ -7,11 +52,20 @@ function Player(props) {
     const basePath = ['players', id]
 
     return (
-        <div>
-            <label>Player {parseInt(id) + 1}: </label>
-            <CampaignSimpleInput path={basePath.concat(0)} placeholder='Player Name' />
-            <CampaignSimpleInput path={basePath.concat(1)} placeholder='Character Name' />
-        </div>
+        <>
+            <div className='elementGroup'>
+                <div className='title'>
+                    <label>Player {parseInt(id) + 1}: </label>
+                </div>
+                <div className='input'>
+                    <CampaignSimpleInput path={basePath.concat(0)} placeholder='Player Name' />
+                </div>
+                <div className='input'>
+                    <CampaignSimpleInput path={basePath.concat(1)} placeholder='Character Name' />
+                </div>
+            </div>
+            <style jsx>{elementGroupCss}</style>
+        </>
     )
 }
 
@@ -20,11 +74,20 @@ function Encounter(props) {
     const basePath = ['encounters', id]
     
     return (
-        <div>
-            <label>Encounter {parseInt(id) + 1}: </label>
-            <CampaignSimpleInput path={basePath.concat(0)} placeholder='Encounter Label' />
-            <CampaignSimpleInput path={basePath.concat(1)} placeholder='Encounter Image URL' />
-        </div>
+        <>
+            <div className='elementGroup'>
+                <div className='title'>
+                    <label>Encounter {parseInt(id) + 1}: </label>
+                </div>
+                <div className='input'>
+                    <CampaignSimpleInput path={basePath.concat(0)} placeholder='Encounter Label' />
+                </div>
+                <div className='input'>
+                    <CampaignSimpleInput path={basePath.concat(1)} placeholder='Encounter Image URL' />
+                </div>
+            </div>
+            <style jsx>{elementGroupCss}</style>
+        </>
     )
 }
 
@@ -43,9 +106,9 @@ function InputSet(props) {
         set[setElementId] = (getAppropriateComponent(setName, setElementId))
     }
     return (
-        <div>
+        <>
             {set}
-        </div>
+        </>
     )
 }
 
@@ -75,11 +138,14 @@ export default function CampaignInputSet(props) {
     return (
         <div>
             {set && (
-                <>
+                <div className='inputSet'>
                     <InputSet set={set} setName={setName} />
-                    <button onClick={addToSet}>Add new {setName}</button>
-                </>
+                    <div className='addBtnContainer'>
+                        <button className='addBtn' onClick={addToSet}>Add new {setName}</button>
+                    </div>
+                </div>
             )}
+            <style jsx>{inputSetCss}</style>
         </div>
     )
 }

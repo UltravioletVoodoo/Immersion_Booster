@@ -1,7 +1,16 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import CampaignSimpleInput from "../../components/campaignSimpleInput";
 import CampaignInputSet from "../../components/campaignInputSet";
+import css from "styled-jsx/css"
+import CampaignTitle from "../../components/campaignTitle";
+
+const campaignEditorCss = css`
+.campaignEditor {
+    position: absolute;
+    width: 100%;
+    left: 0;
+}
+`
 
 export default function CampaignEditor() {
     const [campaign, setCampaign] = useState(undefined)
@@ -32,18 +41,21 @@ export default function CampaignEditor() {
     }, [])
     
     return (
-        <div>
-            <Link href="/admin">
-                <button>To Admin Dashboard</button>
-            </Link>
-            {campaign && (
-                <>
-                    <CampaignSimpleInput path={['name']} placeholder='Campaign Name' />
-                    <CampaignInputSet setName='players' />
-                    <CampaignInputSet setName='encounters' />
-                    <CampaignInputSet setName='combats' />
-                </>
-            )}
-        </div>
+        <>
+            <div className='campaignEditor'>
+                <Link href="/admin">
+                    <button>To Admin Dashboard</button>
+                </Link>
+                {campaign && (
+                    <>
+                        <CampaignTitle />
+                        <CampaignInputSet setName='players' />
+                        <CampaignInputSet setName='encounters' />
+                        <CampaignInputSet setName='combats' />
+                    </>
+                )}
+            </div>
+            <style jsx>{campaignEditorCss}</style>
+        </>
     )
 }
