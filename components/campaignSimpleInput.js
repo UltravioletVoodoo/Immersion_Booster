@@ -43,7 +43,9 @@ export default function CampaignSimpleInput(props) {
         saveData(newValue, path)
     }
 
-    useEffect(loadInnerValue, [])
+    useEffect(() => {
+        loadInnerValue()
+    }, [])
 
     return (
         <div>

@@ -4,12 +4,15 @@ import CampaignSimpleInput from "./campaignSimpleInput"
 
 function Player(props) {
     const { id } = props
-    const path = ['players', id]
+    const basePath = ['players', id]
+    const playerNamePath = basePath.concat(0)
+    const characterNamePath = basePath.concat(1)
 
     return (
         <div>
             <label>{id}: </label>
-            <CampaignSimpleInput path={path} placeholder='test' />
+            <CampaignSimpleInput path={playerNamePath} placeholder='Player Name' />
+            <CampaignSimpleInput path={characterNamePath} placeholder='Character Name' />
         </div>
     )
 }
@@ -36,7 +39,13 @@ export default function CampaignPlayersInput() {
     }
 
     function addPlayer() {
+        if (typeof window === 'undefined') return
         setPlayers(players.concat(''))
+        // Initialize an array location for all player data
+        let campaign = JSON.parse(localStorage.getItem('campaign'))
+        console.log(campaign, 'test', campaign.players)
+        campaign.players.push([])
+        localStorage.setItem('campaign', JSON.stringify(campaign))
     }
 
     useEffect(() => {
