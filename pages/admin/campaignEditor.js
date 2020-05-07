@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import CampaignSimpleInput from "../../components/campaignSimpleInput";
-import CampaignPlayersInput from "../../components/campaignPlayersInput";
+import CampaignInputSet from "../../components/campaignInputSet";
 
 export default function CampaignEditor() {
     const [campaign, setCampaign] = useState(undefined)
@@ -39,7 +39,9 @@ export default function CampaignEditor() {
             {campaign && (
                 <>
                     <CampaignSimpleInput path={['name']} placeholder='Campaign Name' />
-                    <CampaignPlayersInput />
+                    <CampaignInputSet setName='players' />
+                    <CampaignInputSet setName='encounters' />
+                    <CampaignInputSet setName='combats' />
                 </>
             )}
         </div>
