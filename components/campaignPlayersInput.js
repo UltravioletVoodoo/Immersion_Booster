@@ -10,7 +10,7 @@ function Player(props) {
 
     return (
         <div>
-            <label>{id}: </label>
+            <label>Player {parseInt(id) + 1}: </label>
             <CampaignSimpleInput path={playerNamePath} placeholder='Player Name' />
             <CampaignSimpleInput path={characterNamePath} placeholder='Character Name' />
         </div>

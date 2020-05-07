@@ -49,7 +49,7 @@ export default function CampaignSimpleInput(props) {
 
     return (
         <div>
-            <label>{path[0]}: </label>
+            <label>{placeholder}: </label>
             <input placeholder={placeholder} value={innerValue} onChange={onInputChange}></input>
         </div>
     )
