@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import css from "styled-jsx/css"
+import PreviewSet from "./previewSet"
 
 
 const TemplateSelectorCss = css`
+.templateSelectorContainer {
+    width: 100%;
+    height: 100%;
+}
 .campaignEditBtn {
     position: absolute;
     bottom: 0;
@@ -25,20 +30,22 @@ export default function TemplateSelector() {
     }, [])
 
     return (
-        <div>
-            {campaign ? (
-                <p>{JSON.stringify(campaign)}</p>
-            ) : (
-                <div>
-                    <p>No campaign is present in storage, import one below</p>
+        <>
+            <div className='templateSelectorContainer'>
+                {campaign ? (
+                    <PreviewSet set={campaign.encounters} />
+                ) : (
+                    <div>
+                        <p>No campaign is present in storage, import one below</p>
+                    </div>
+                )}
+                <div className='campaignEditBtn'>
+                    <Link href='/admin/campaignEditor'>
+                        <button>Edit/Upload Campaigns</button>
+                    </Link>
                 </div>
-            )}
-            <div className='campaignEditBtn'>
-                <Link href='/admin/campaignEditor'>
-                    <button>Edit/Upload Campaigns</button>
-                </Link>
             </div>
             <style jsx>{TemplateSelectorCss}</style>
-        </div>
+        </>
     )
 }
