@@ -46,6 +46,13 @@ const inputSetCss = css`
 }
 `
 
+const combatCss = css`
+.combat {
+    background-color: red;
+    padding: 10px;
+}
+`
+
 
 function Player(props) {
     const { id } = props
@@ -69,9 +76,59 @@ function Player(props) {
     )
 }
 
+function Combat(props) {
+    const { id } = props
+    const [baddies, setBaddies] = useState([''])
+
+    let baddieList = []
+    for (let baddie in baddies) {
+        baddieList[baddie] = (<CampaignSimpleInput path={['encounters', id, 2, baddie]} placeholder='Enemy Name' />)
+    }
+
+    function addBaddie() {
+        setBaddies(baddies.concat(''))
+    }
+
+    function loadBaddies() {
+        if (typeof window === 'undefined') return
+        setBaddies(JSON.parse(localStorage.getItem('campaign')).encounters[id][2])
+    }
+
+    useEffect(() => {
+        loadBaddies()
+    },[])
+
+    return (
+        <div className='combat'>
+            {baddieList}
+            <button onClick={addBaddie}>Add Enemy</button>
+            <style jsx>{combatCss}</style>
+        </div>
+    )
+}
+
 function Encounter(props) {
     const { id } = props
     const basePath = ['encounters', id]
+    const [combat, setCombat] = useState(false)
+
+    function toggleCombat() {
+        if (typeof window === 'undefined') return
+        let campaign = JSON.parse(localStorage.getItem('campaign'))
+        campaign.encounters[id][2] = []
+        localStorage.setItem('campaign', JSON.stringify(campaign))
+        setCombat(!combat)
+    }
+
+    function handlePreexistingCombat() {
+        if (typeof window === 'undefined') return
+        const campaign = JSON.parse(localStorage.getItem('campaign'))
+        if (campaign.encounters[id][2] && campaign.encounters[id][2].length > 0) setCombat(true)
+    }
+
+    useEffect(() => {
+        handlePreexistingCombat()
+    }, [])
     
     return (
         <>
@@ -85,6 +142,10 @@ function Encounter(props) {
                 <div className='input'>
                     <CampaignSimpleInput path={basePath.concat(1)} placeholder='Encounter Image URL' />
                 </div>
+                <button onClick={toggleCombat}>{combat ? 'Delete' : 'Add'} Combat</button>
+                {combat && (
+                    <Combat id={id} />
+                )}
             </div>
             <style jsx>{elementGroupCss}</style>
         </>

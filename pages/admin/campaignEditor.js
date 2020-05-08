@@ -51,7 +51,6 @@ export default function CampaignEditor() {
                         <CampaignTitle />
                         <CampaignInputSet setName='players' />
                         <CampaignInputSet setName='encounters' />
-                        <CampaignInputSet setName='combats' />
                     </>
                 )}
             </div>
