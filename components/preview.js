@@ -10,9 +10,10 @@ const previewCss = css`
     border: 1px solid black;
     border-radius: 10px;
     cursor: pointer;
+    transition: 0.5s;
 }
 .preview:hover {
-    background-color: blue;
+    box-shadow: 0 0 10px black;
 }
 .previewLabel {
     font-size: 20px;
@@ -25,13 +26,32 @@ const previewCss = css`
     height: 100%;
     width: auto;
 }
+.actionButton {
+    width: 25%;
+    height: 25%;
+    top: 50%;
+    z-index: 2;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: 0.5s;
+    opacity: 0.2;
+}
+.actionButton:hover {
+    opacity: 1;
+}
+.encounterStart {
+    left: 25%;
+}
+.combatStart {
+    left: 75%;
+}
 `
 
 export default function Preview(props) {
     const { label, image } = props
     let labelChannel, imageChannel
 
-    function broadcast() {
+    function broadcastEncounter() {
         labelChannel.postMessage(label)
         imageChannel.postMessage(image)
     }
@@ -48,9 +68,11 @@ export default function Preview(props) {
 
     return (
         <>
-            <div className='preview' onClick={broadcast}>
+            <div className='preview'>
                 <label className='previewLabel'>{label}</label>
                 <img className='previewImage' src={image}></img>
+                <img className='encounterStart actionButton' src='/scroll-quill.svg' onClick={broadcastEncounter}></img>
+                <img className='combatStart actionButton' src='/swords-emblem.svg'></img>
             </div>
             <style jsx>{previewCss}</style>
         </>

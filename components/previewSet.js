@@ -15,6 +15,7 @@ const previewSetElementCss = css`
     height: 200px;
     width: 200px;
     left: calc(50% - 100px);
+    margin-bottom: 10px;
 }
 `
 
