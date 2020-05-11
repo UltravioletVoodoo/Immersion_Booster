@@ -8,8 +8,12 @@ img,p {
     transition: 1s;
 }
 .bigImage {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: auto;
-    height: 80vh;
+    height: 100%;
+    position: absolute;
 }
 .bigImageLabel {
     color: yellow;
@@ -80,17 +84,17 @@ export default function Field(props) {
     switch(type) {
         case 'bigImage':
             return (
-                <div>
+                <>
                     <img className={`bigImage ${fadeStyle}`} src={fieldValue}></img>
                     <style jsx>{imageFieldCss}</style>
-                </div>
+                </>
             )
         case 'bigImageLabel':
             return (
-                <div>
+                <>
                     <p className={`bigImageLabel ${fadeStyle}`}>{fieldValue}</p>
                     <style jsx>{imageFieldCss}</style>
-                </div>
+                </>
             )
         default:
             return null

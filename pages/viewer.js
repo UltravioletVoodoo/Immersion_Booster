@@ -13,32 +13,52 @@ const viewerCss = css`
     left: 0;
     background-color: #2e2e2e;
 }
-.CenterImage {
+.imageCombo {
     position: fixed;
-    top: 5vh;
     text-align: center;
+}
+.encounterVariant {
+    top: 5%;
+    height: 90%;
     width: 100%;
 }
-.CenterImageLabel {
-    position: fixed;
-    top: 85vh;
-    text-align: center;
+.combatVariant {
+    top: 50%;
+    height: 50%;
+    width: 33%;
+    transform: translateY(-50%);
+}
+.comboImage {
+    position: absolute;
+    height: 80%;
     width: 100%;
+}
+.comboLabel {
+    position: absolute;
+    width: 100%;
+    top: 85%;
 }
 `
 
 export default function Viewer() {
+    const encounter = true;
+
+
+    const comboClasses = `imageCombo ${encounter ? 'encounter' : 'combat'}Variant`
+
     return (
         <div className='viewer'>
             <Head>
                 <title>Immersion Viewer</title>
             </Head>
             <Base />
-            <div className="CenterImage">
-                <Field fieldName='CenterImage' type='bigImage' />
-            </div>
-            <div className='CenterImageLabel'>
-                <Field fieldName='CenterImageLabel' type='bigImageLabel' />
+            <div className={comboClasses}>
+                <div className="comboImage">
+                    <Field fieldName='CenterImage' type='bigImage' />
+                </div>
+                <div className='comboLabel'>
+                    <Field fieldName='CenterImageLabel' type='bigImageLabel' />
+                </div>
             </div>
             <style jsx>{viewerCss}</style>
         </div>
