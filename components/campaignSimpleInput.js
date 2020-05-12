@@ -31,7 +31,6 @@ function getPathEnd(obj, path) {
 }
 
 function deepSet(obj, path, value) {
-    console.log('test: ', obj, path, value)
     const pathCopy = [... path]
     const last = pathCopy.pop()
     for (let key of pathCopy) {

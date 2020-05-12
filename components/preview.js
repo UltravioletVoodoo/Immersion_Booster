@@ -34,27 +34,41 @@ const previewCss = css`
     position: absolute;
     transform: translate(-50%, -50%);
     transition: 0.5s;
-    opacity: 0.2;
+    opacity: 0.4;
 }
 .actionButton:hover {
     opacity: 1;
 }
-.encounterStart {
+.leftBtn {
     left: 25%;
 }
-.combatStart {
+.rightBtn {
     left: 75%;
+}
+.centerBtn {
+    left: 50%;
 }
 `
 
+function checkEnemiesPresent(enemies) {
+    try {
+        if (enemies.length > 0) return true
+        return false
+    } catch(e) {
+        return false
+    }
+}
+
 export default function Preview(props) {
-    const { label, image } = props
+    const { label, image, enemies } = props
     let labelChannel, imageChannel, setCombatChannel
+    const enemiesPresent = checkEnemiesPresent(enemies)
+    const encounterBtnClasses = `actionButton ${enemiesPresent ? 'leftBtn' : 'centerBtn' }`
 
     function broadCast(isCombat) {
         labelChannel.postMessage(label)
         imageChannel.postMessage(image)
-        setCombatChannel.postMessage(isCombat)
+        setCombatChannel.postMessage(isCombat ? enemies : null)
     }
 
     function broadcastEncounter() {
@@ -82,8 +96,10 @@ export default function Preview(props) {
             <div className='preview'>
                 <label className='previewLabel'>{label}</label>
                 <img className='previewImage' src={image}></img>
-                <img className='encounterStart actionButton' src='/scroll-quill.svg' onClick={broadcastEncounter}></img>
-                <img className='combatStart actionButton' src='/swords-emblem.svg' onClick={broadcastCombat}></img>
+                <img className={encounterBtnClasses} src='/scroll-quill.svg' onClick={broadcastEncounter}></img>
+                {enemiesPresent && (
+                    <img className='actionButton rightBtn' src='/swords-emblem.svg' onClick={broadcastCombat}></img>
+                )}
             </div>
             <style jsx>{previewCss}</style>
         </>

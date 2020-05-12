@@ -15,7 +15,7 @@ const viewerCss = css`
     background-color: #2e2e2e;
 }
 .imageCombo {
-    position: fixed;
+    position: absolute;
     text-align: center;
     transition: 2s;
 }
@@ -27,7 +27,7 @@ const viewerCss = css`
 .combatVariant {
     top: 50%;
     height: 50%;
-    width: 33%;
+    width: 40%;
     transform: translateY(-50%);
 }
 .comboImage {
@@ -40,10 +40,19 @@ const viewerCss = css`
     width: 100%;
     top: 85%;
 }
+
+.combatViewer {
+    position: absolute;
+    width: 50%;
+    height: 80%;
+    right: 10%;
+    top: 10%;
+    border: 1px solid white;
+}
 `
 
 export default function Viewer() {
-    const [combat, setCombat] = useState(false)
+    const [combat, setCombat] = useState(null)
     let c
 
     useEffect(() => {
@@ -71,6 +80,11 @@ export default function Viewer() {
                     <Field fieldName='CenterImageLabel' type='bigImageLabel' />
                 </div>
             </div>
+            {combat && (
+                <div className='combatViewer'>
+
+                </div>
+            )}
             <style jsx>{viewerCss}</style>
         </div>
     )
