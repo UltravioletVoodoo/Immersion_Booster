@@ -33,6 +33,10 @@ export default function Field(props) {
 
     
     function addField(value) {
+
+        // If we are updating to what is already there, do nothing
+        if (fieldValue === value) return;
+
         function setAndShow() {
             setFieldValue(value)
             setFadeStyle('show')

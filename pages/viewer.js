@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Base from '../components/base'
 import css from "styled-jsx/css"
 import Field from '../components/field'
+import { useState, useEffect } from 'react'
 
 
 const viewerCss = css`
@@ -16,6 +17,7 @@ const viewerCss = css`
 .imageCombo {
     position: fixed;
     text-align: center;
+    transition: 2s;
 }
 .encounterVariant {
     top: 5%;
@@ -41,10 +43,19 @@ const viewerCss = css`
 `
 
 export default function Viewer() {
-    const encounter = true;
+    const [combat, setCombat] = useState(false)
+    let c
 
+    useEffect(() => {
+        c = new BroadcastChannel('setCombat');
+        c.onmessage = (e) => { setCombat(e.data) }
 
-    const comboClasses = `imageCombo ${encounter ? 'encounter' : 'combat'}Variant`
+        return () => {
+            c.close()
+        }
+    })
+
+    const comboClasses = `imageCombo ${combat ? 'combat' : 'encounter'}Variant`
 
     return (
         <div className='viewer'>

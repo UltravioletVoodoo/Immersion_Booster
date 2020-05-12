@@ -49,20 +49,31 @@ const previewCss = css`
 
 export default function Preview(props) {
     const { label, image } = props
-    let labelChannel, imageChannel
+    let labelChannel, imageChannel, setCombatChannel
 
-    function broadcastEncounter() {
+    function broadCast(isCombat) {
         labelChannel.postMessage(label)
         imageChannel.postMessage(image)
+        setCombatChannel.postMessage(isCombat)
+    }
+
+    function broadcastEncounter() {
+        broadCast(false)
+    }
+
+    function broadcastCombat() {
+        broadCast(true)
     }
 
     useEffect(() => {
         labelChannel = new BroadcastChannel('addCenterImageLabel')
         imageChannel = new BroadcastChannel('addCenterImage')
+        setCombatChannel = new BroadcastChannel('setCombat')
 
         return () => {
             labelChannel.close()
             imageChannel.close()
+            setCombatChannel.close()
         }
     }, [])
 
@@ -72,7 +83,7 @@ export default function Preview(props) {
                 <label className='previewLabel'>{label}</label>
                 <img className='previewImage' src={image}></img>
                 <img className='encounterStart actionButton' src='/scroll-quill.svg' onClick={broadcastEncounter}></img>
-                <img className='combatStart actionButton' src='/swords-emblem.svg'></img>
+                <img className='combatStart actionButton' src='/swords-emblem.svg' onClick={broadcastCombat}></img>
             </div>
             <style jsx>{previewCss}</style>
         </>
