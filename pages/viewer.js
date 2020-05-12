@@ -3,6 +3,7 @@ import Base from '../components/base'
 import css from "styled-jsx/css"
 import Field from '../components/field'
 import { useState, useEffect } from 'react'
+import InitiativeTracker from '../components/initiativeTracker'
 
 
 const viewerCss = css`
@@ -62,7 +63,7 @@ export default function Viewer() {
         return () => {
             c.close()
         }
-    })
+    }, [])
 
     const comboClasses = `imageCombo ${combat ? 'combat' : 'encounter'}Variant`
 
@@ -82,7 +83,7 @@ export default function Viewer() {
             </div>
             {combat && (
                 <div className='combatViewer'>
-
+                    <InitiativeTracker enemies={combat} />
                 </div>
             )}
             <style jsx>{viewerCss}</style>
