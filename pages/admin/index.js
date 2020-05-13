@@ -3,6 +3,7 @@ import Base from '../../components/base'
 import css from "styled-jsx/css"
 import FieldEditor from '../../components/fieldEditor'
 import TemplateSelector from '../../components/templateSelector'
+import CommandBtn from '../../components/commandBtn'
 
 
 const AdminCss = css`
@@ -36,6 +37,9 @@ export default function Admin() {
             <div className='manualEditors'>
                 <FieldEditor fieldName="CenterImage" placeHolder='Image URL' />
                 <FieldEditor fieldName="CenterImageLabel" placeHolder='Label Text' />
+                <div>
+                    <CommandBtn text='Next Turn' channelName='turnUpdate' />
+                </div>
             </div>
             <div className='templateSelector'>
                 <TemplateSelector />
