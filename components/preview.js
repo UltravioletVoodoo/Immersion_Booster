@@ -1,5 +1,5 @@
 import css from "styled-jsx/css"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 const previewCss = css`
 .preview {
@@ -59,36 +59,37 @@ function checkEnemiesPresent(enemies) {
     }
 }
 
+function loadPlayers() {
+    if (typeof window === 'undefined') return
+    return JSON.parse(localStorage.getItem('campaign')).players
+}
+
 export default function Preview(props) {
-    const { label, image, enemies } = props
-    let labelChannel, imageChannel, setCombatChannel
+    const { label, image, enemies, state, setState } = props
+    const [players, setPlayers] = useState(null)
     const enemiesPresent = checkEnemiesPresent(enemies)
     const encounterBtnClasses = `actionButton ${enemiesPresent ? 'leftBtn' : 'centerBtn' }`
 
-    function broadCast(isCombat) {
-        labelChannel.postMessage(label)
-        imageChannel.postMessage(image)
-        setCombatChannel.postMessage(isCombat ? enemies : null)
+    function update(isCombat) {
+        const newState = {... state}
+        newState.imageLabel = label
+        newState.imageUrl = image
+        newState.isCombat = isCombat
+        const newEnemies = enemies ? [...enemies] : []
+        newState.combat.combatants = newEnemies.concat(players)
+        setState(newState)
     }
 
-    function broadcastEncounter() {
-        broadCast(false)
+    function startEncounter() {
+        update(false)
     }
 
-    function broadcastCombat() {
-        broadCast(true)
+    function startCombat() {
+        update(true)
     }
 
     useEffect(() => {
-        labelChannel = new BroadcastChannel('addCenterImageLabel')
-        imageChannel = new BroadcastChannel('addCenterImage')
-        setCombatChannel = new BroadcastChannel('setCombat')
-
-        return () => {
-            labelChannel.close()
-            imageChannel.close()
-            setCombatChannel.close()
-        }
+        setPlayers(loadPlayers())
     }, [])
 
     return (
@@ -96,9 +97,9 @@ export default function Preview(props) {
             <div className='preview'>
                 <label className='previewLabel'>{label}</label>
                 <img className='previewImage' src={image}></img>
-                <img className={encounterBtnClasses} src='/scroll-quill.svg' onClick={broadcastEncounter}></img>
+                <img className={encounterBtnClasses} src='/scroll-quill.svg' onClick={startEncounter}></img>
                 {enemiesPresent && (
-                    <img className='actionButton rightBtn' src='/swords-emblem.svg' onClick={broadcastCombat}></img>
+                    <img className='actionButton rightBtn' src='/swords-emblem.svg' onClick={startCombat}></img>
                 )}
             </div>
             <style jsx>{previewCss}</style>

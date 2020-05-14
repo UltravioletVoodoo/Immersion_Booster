@@ -1,27 +1,21 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 
 export default function FieldEditor(props) {
-    const { fieldName, placeHolder } = props
+    const { fieldName, placeHolder, state, setState } = props
     const inputRef = useRef(null)
-    let addChannel, deleteChannel
 
     function updateField() {
-        addChannel.postMessage(inputRef.current.value)
+        console.log('updateField() called in the fieldEditor', state, inputRef.current.value)
+        const newState = {... state}
+        newState[fieldName] = inputRef.current.value
+        setState(newState)
     }
 
     function deleteField() {
-        deleteChannel.postMessage('')
+        const newState = {... state}
+        newState[fieldName] = ''
+        setState(newState)
     }
-
-    useEffect(() => {
-        addChannel = new BroadcastChannel(`add${fieldName}`)
-        deleteChannel = new BroadcastChannel(`delete${fieldName}`)
-
-        return () => {
-            addChannel.close()
-            deleteChannel.close()
-        }
-    }, [])
 
     return (
         <div>

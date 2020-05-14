@@ -3,7 +3,9 @@ import Base from '../../components/base'
 import css from "styled-jsx/css"
 import FieldEditor from '../../components/fieldEditor'
 import TemplateSelector from '../../components/templateSelector'
-import CommandBtn from '../../components/commandBtn'
+import { useState, useEffect } from 'react'
+import { blankState } from '../../util/placeholders'
+import NextTurn from '../../components/nextTurn'
 
 
 const AdminCss = css`
@@ -25,8 +27,31 @@ const AdminCss = css`
 }
 `
 
+function updateStoredState(state) {
+    if (typeof window === 'undefined') return
+    localStorage.setItem('state', JSON.stringify(state))
+}
+
+function loadStoredState(setState) {
+    if (typeof window === 'undefined') return
+    const newState = JSON.parse(localStorage.getItem('state'))
+    if (newState) {
+        setState(newState)
+    }
+}
 
 export default function Admin() {
+    const [state, setState] = useState(blankState)
+
+    useEffect(() => {
+        loadStoredState(setState)
+    }, [])
+
+    useEffect(() => {
+        console.log('state change causing re-render: ', state)
+        updateStoredState(state)
+    }, [state])
+
     return (
         <div>
             <Head>
@@ -35,14 +60,14 @@ export default function Admin() {
             <Base />
             <h1>Admin Page</h1>
             <div className='manualEditors'>
-                <FieldEditor fieldName="CenterImage" placeHolder='Image URL' />
-                <FieldEditor fieldName="CenterImageLabel" placeHolder='Label Text' />
+                <FieldEditor fieldName='imageUrl' placeHolder='Image URL' state={state} setState={setState} />
+                <FieldEditor fieldName="imageLabel" placeHolder='Label Text' state={state} setState={setState} />
                 <div>
-                    <CommandBtn text='Next Turn' channelName='turnUpdate' />
+                    <NextTurn state={state} setState={setState} />
                 </div>
             </div>
             <div className='templateSelector'>
-                <TemplateSelector />
+                <TemplateSelector state={state} setState={setState} />
             </div>
             <style jsx>{AdminCss}</style>
         </div>

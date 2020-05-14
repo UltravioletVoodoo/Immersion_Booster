@@ -16,7 +16,8 @@ const TemplateSelectorCss = css`
 `
 
 
-export default function TemplateSelector() {
+export default function TemplateSelector(props) {
+    const { state, setState } = props
     const [campaign, setCampaign] = useState(null)
     
     
@@ -33,7 +34,7 @@ export default function TemplateSelector() {
         <>
             <div className='templateSelectorContainer'>
                 {campaign ? (
-                    <PreviewSet set={campaign.encounters} />
+                    <PreviewSet set={campaign.encounters} state={state} setState={setState} />
                 ) : (
                     <div>
                         <p>No campaign is present in storage, import one below</p>

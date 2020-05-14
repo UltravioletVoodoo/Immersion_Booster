@@ -54,7 +54,6 @@ const viewerCss = css`
 
 export default function Viewer() {
     const [combat, setCombat] = useState(null)
-    let c
 
     useEffect(() => {
         c = new BroadcastChannel('setCombat');
