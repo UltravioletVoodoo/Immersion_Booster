@@ -48,7 +48,6 @@ export default function Admin() {
     }, [])
 
     useEffect(() => {
-        console.log('state change causing re-render: ', state)
         updateStoredState(state)
     }, [state])
 

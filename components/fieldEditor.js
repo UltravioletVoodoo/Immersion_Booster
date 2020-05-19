@@ -5,7 +5,6 @@ export default function FieldEditor(props) {
     const inputRef = useRef(null)
 
     function updateField() {
-        console.log('updateField() called in the fieldEditor', state, inputRef.current.value)
         const newState = {... state}
         newState[fieldName] = inputRef.current.value
         setState(newState)

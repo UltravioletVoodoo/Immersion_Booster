@@ -7,7 +7,7 @@ img,p {
     opacity: 0;
     transition: 1s;
 }
-.bigImage {
+.viewerImage {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -15,7 +15,7 @@ img,p {
     height: 100%;
     position: absolute;
 }
-.bigImageLabel {
+.viewerLabel {
     color: yellow;
     font-size: 30px;
     margin: 0px;
@@ -27,76 +27,52 @@ img,p {
 
 
 export default function Field(props) {
-    const { fieldName, type='bigImage' } = props
-    const [fieldValue, setFieldValue] = useState(null)
+    const { type, fieldValue } = props
     const [fadeStyle, setFadeStyle] = useState('')
+    const [stateValue, setStateValue] = useState(null)
 
-    
-    function addField(value) {
+    function fadeInNewValue() {
+        setStateValue(fieldValue)
+        setFadeStyle('show')
+    }
 
-        // If we are updating to what is already there, do nothing
-        if (fieldValue === value) return;
-
-        function setAndShow() {
-            setFieldValue(value)
-            setFadeStyle('show')
+    function fadeAndSwap() {
+        const element = document.querySelector(`.${type}`)
+        function fadeInAndRemoveListener() {
+            fadeInNewValue(fieldValue)
+            element.removeEventListener('transitionend', fadeInAndRemoveListener)
         }
-
-        if (fadeStyle === '') {
-            setAndShow()
-            return
-        }
-
-        const transition = document.querySelector(`.${type}`)
-        function setAndShowAndRemoveTransition() {
-            setAndShow()
-            transition.removeEventListener('transitionend', setAndShowAndRemoveTransition)
-        }
-        transition.addEventListener('transitionend', setAndShowAndRemoveTransition)
+        element.addEventListener('transitionend', fadeInAndRemoveListener)
         setFadeStyle('')
     }
 
-    function deleteField() {
-        if (fadeStyle === '') return
-        const transition = document.querySelector(`.${type}`);
-
-        function remove() {
-            setFieldValue('')
-            setFadeStyle('')
-            transition.removeEventListener('transitionend', remove)
+    function updateValue() {
+        console.log(stateValue, fadeStyle)
+        if (fadeStyle === '') { // There is no current value, so just fade in
+            fadeInNewValue()
+        } else { // There is a current value, fade out then fade in the new value
+            fadeAndSwap()
         }
-        
-        transition.addEventListener('transitionend', remove)
-        setFadeStyle('')
     }
-
 
     useEffect(() => {
-        const addChannel = new BroadcastChannel(`add${fieldName}`)
-        const deleteChannel = new BroadcastChannel(`delete${fieldName}`)
-        addChannel.onmessage = (e) => { addField(e.data) }
-        deleteChannel.onmessage = (e) => { deleteField() }
-
-
-        return () => {
-            addChannel.close();
-            deleteChannel.close();
+        if (stateValue !== fieldValue) { // We've been passed a new value. We need to animate the change
+            updateValue()
         }
     })
 
-
     switch(type) {
-        case 'bigImage':
+        case 'viewerImage':
             return (
                 <>
-                    <img className={`bigImage ${fadeStyle}`} src={fieldValue}></img>
+                    <img className={`viewerImage ${fadeStyle}`} src={stateValue}></img>
                     <style jsx>{imageFieldCss}</style>
                 </>
             )
-        case 'bigImageLabel':
+        case 'viewerLabel':
             return (
                 <>
-                    <p className={`bigImageLabel ${fadeStyle}`}>{fieldValue}</p>
+                    <p className={`viewerLabel ${fadeStyle}`}>{stateValue}</p>
                     <style jsx>{imageFieldCss}</style>
                 </>
             )

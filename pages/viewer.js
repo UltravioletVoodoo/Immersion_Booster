@@ -4,6 +4,7 @@ import css from "styled-jsx/css"
 import Field from '../components/field'
 import { useState, useEffect } from 'react'
 import InitiativeTracker from '../components/initiativeTracker'
+import { blankState } from '../util/placeholders'
 
 
 const viewerCss = css`
@@ -53,18 +54,21 @@ const viewerCss = css`
 `
 
 export default function Viewer() {
-    const [combat, setCombat] = useState(null)
+    const [state, setState] = useState(blankState)
 
     useEffect(() => {
-        c = new BroadcastChannel('setCombat');
-        c.onmessage = (e) => { setCombat(e.data) }
+        function handleState() {
+            setState(JSON.parse(localStorage.getItem('state')))
+        }
+        handleState()
+        window.addEventListener('storage', handleState)
 
         return () => {
-            c.close()
+            window.removeEventListener('storage', handleState)
         }
     }, [])
 
-    const comboClasses = `imageCombo ${combat ? 'combat' : 'encounter'}Variant`
+    const comboClasses = `imageCombo ${state.isCombat ? 'combat' : 'encounter'}Variant`
 
     return (
         <div className='viewer'>
@@ -74,15 +78,15 @@ export default function Viewer() {
             <Base />
             <div className={comboClasses}>
                 <div className="comboImage">
-                    <Field fieldName='CenterImage' type='bigImage' />
+                    <Field type='viewerImage' fieldValue={state.imageUrl} />
                 </div>
                 <div className='comboLabel'>
-                    <Field fieldName='CenterImageLabel' type='bigImageLabel' />
+                    <Field type='viewerLabel' fieldValue={state.imageLabel} />
                 </div>
             </div>
-            {combat && (
+            {state.isCombat && (
                 <div className='combatViewer'>
-                    <InitiativeTracker enemies={combat} />
+                    <InitiativeTracker combatants={state.combat.combatants} turn={state.combat.turn} />
                 </div>
             )}
             <style jsx>{viewerCss}</style>

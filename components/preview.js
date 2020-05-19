@@ -77,6 +77,7 @@ export default function Preview(props) {
         newState.isCombat = isCombat
         const newEnemies = enemies ? [...enemies] : []
         newState.combat.combatants = newEnemies.concat(players)
+        newState.combat.turn = 0
         setState(newState)
     }
 
