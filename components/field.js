@@ -46,12 +46,25 @@ export default function Field(props) {
         setFadeStyle('')
     }
 
+    function fadeOutOldValue() {
+        const element = document.querySelector(`.${type}`)
+        function removeListeners() {
+            element.removeEventListener('transitionend', removeListeners)
+            setStateValue('')
+        }
+        element.addEventListener('transitionend', removeListeners)
+        setFadeStyle('')
+    }
+
     function updateValue() {
-        console.log(stateValue, fadeStyle)
-        if (fadeStyle === '') { // There is no current value, so just fade in
-            fadeInNewValue()
-        } else { // There is a current value, fade out then fade in the new value
-            fadeAndSwap()
+        if (fieldValue === '') {
+            fadeOutOldValue()
+        } else {
+            if (!stateValue || stateValue === '') { // There is no current value, so just fade in
+                fadeInNewValue()
+            } else { // There is a current value, fade out then fade in the new value
+                fadeAndSwap()
+            }
         }
     }
 
