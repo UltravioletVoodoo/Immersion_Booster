@@ -6,6 +6,7 @@ import TemplateSelector from '../../components/templateSelector'
 import { useState, useEffect } from 'react'
 import { blankState } from '../../util/placeholders'
 import NextTurn from '../../components/nextTurn'
+import Viewer from '../../components/viewer'
 
 
 const AdminCss = css`
@@ -13,7 +14,7 @@ const AdminCss = css`
     position: fixed;
     top: 0;
     left: 0;
-    bottom: 0;
+    bottom: 50vh;
     right: 50vw;
     background-color: grey;
 }
@@ -24,6 +25,14 @@ const AdminCss = css`
     right: 0;
     bottom: 0;
     background-color: white;
+}
+.viewerPreview {
+    position: fixed;
+    top: 50vh;
+    left: 0;
+    right: 50vw;
+    bottom: 0;
+    background-color: darkcyan;
 }
 `
 
@@ -64,6 +73,9 @@ export default function Admin() {
                 <div>
                     <NextTurn state={state} setState={setState} />
                 </div>
+            </div>
+            <div className='viewerPreview'>
+                <Viewer state={state} />
             </div>
             <div className='templateSelector'>
                 <TemplateSelector state={state} setState={setState} />

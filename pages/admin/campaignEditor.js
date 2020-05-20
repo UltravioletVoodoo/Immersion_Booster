@@ -1,3 +1,5 @@
+import Head from 'next/head';
+import Base from '../../components/base';
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import CampaignInputSet from "../../components/campaignInputSet";
@@ -42,6 +44,10 @@ export default function CampaignEditor() {
     
     return (
         <>
+            <Head>
+                <title>Campaign Editor</title>
+            </Head>
+            <Base />
             <div className='campaignEditor'>
                 <Link href="/admin">
                     <button>To Admin Dashboard</button>

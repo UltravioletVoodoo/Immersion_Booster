@@ -1,22 +1,9 @@
-import Head from 'next/head'
-import Base from '../components/base'
+import ViewerImage from "./viewerImage";
+import ViewerLabel from "./viewerLabel";
+import InitiativeTracker from "./initiativeTracker";
 import css from "styled-jsx/css"
-import { useState, useEffect } from 'react'
-import InitiativeTracker from '../components/initiativeTracker'
-import { blankState } from '../util/placeholders'
-import ViewerImage from '../components/viewerImage'
-import ViewerLabel from '../components/viewerLabel'
-
 
 const viewerCss = css`
-.viewer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: #2e2e2e;
-}
 .imageCombo {
     position: absolute;
     text-align: center;
@@ -43,7 +30,6 @@ const viewerCss = css`
     width: 100%;
     top: 85%;
 }
-
 .combatViewer {
     position: absolute;
     width: 50%;
@@ -54,31 +40,13 @@ const viewerCss = css`
 }
 `
 
-export default function Viewer() {
-    const [state, setState] = useState(blankState)
-
-    useEffect(() => {
-        function handleState() {
-            setState(JSON.parse(localStorage.getItem('state')))
-        }
-        handleState()
-        window.addEventListener('storage', handleState)
-
-        return () => {
-            window.removeEventListener('storage', handleState)
-        }
-    }, [])
-
+export default function Viewer(props) {
+    const { state } = props
     const comboClasses = `imageCombo ${state.isCombat ? 'combat' : 'encounter'}Variant`
-
     return (
-        <div className='viewer'>
-            <Head>
-                <title>Immersion Viewer</title>
-            </Head>
-            <Base />
+        <>
             <div className={comboClasses}>
-                <div className="comboImage">
+                <div className='comboImage'>
                     <ViewerImage imageSrc={state.imageUrl} />
                 </div>
                 <div className='comboLabel'>
@@ -91,6 +59,6 @@ export default function Viewer() {
                 </div>
             )}
             <style jsx>{viewerCss}</style>
-        </div>
+        </>
     )
 }
