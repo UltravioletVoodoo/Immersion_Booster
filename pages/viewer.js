@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import Base from '../components/base'
 import css from "styled-jsx/css"
-import Field from '../components/field'
 import { useState, useEffect } from 'react'
 import InitiativeTracker from '../components/initiativeTracker'
 import { blankState } from '../util/placeholders'
+import ViewerImage from '../components/viewerImage'
+import ViewerLabel from '../components/viewerLabel'
 
 
 const viewerCss = css`
@@ -78,10 +79,10 @@ export default function Viewer() {
             <Base />
             <div className={comboClasses}>
                 <div className="comboImage">
-                    <Field type='viewerImage' fieldValue={state.imageUrl} />
+                    <ViewerImage imageSrc={state.imageUrl} />
                 </div>
                 <div className='comboLabel'>
-                    <Field type='viewerLabel' fieldValue={state.imageLabel} />
+                    <ViewerLabel text={state.imageLabel} />
                 </div>
             </div>
             {state.isCombat && (
