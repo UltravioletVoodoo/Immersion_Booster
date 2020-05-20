@@ -5,18 +5,6 @@ export const UNCHANGED = 'UNCHANGED'
 export const ABOUT_TO_CHANGE = 'ABOUT_TO_CHANGE'
 export const JUST_CHANGED = 'JUST_CHANGED'
 
-// export default function useChangeHandler(prop, delay) {
-//     const[[state, val], setState] = useState([UNCHANGED, null])
-//     if (val !== prop) {
-//         setTimeout(() => setState([JUST_CHANGED, prop]), delay)
-//         return [ABOUT_TO_CHANGE, val]
-//     }
-//     if (state !== UNCHANGED) {
-//         setTimeout(() => setState([UNCHANGED, prop]), delay)
-//         return [state, prop]
-//     }
-//     return [UNCHANGED, prop]
-// }
 export default function useChangeHandler(prop, delay) {
 const [[inFlight, status, val], setState] = useState([
     false,

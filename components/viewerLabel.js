@@ -22,8 +22,8 @@ export default function ViewerLabel(props) {
     const [state, labelText] = useChangeHandler(text, 1000)
     const transition = {
         [UNCHANGED]: 'viewerLabel',
-        [ABOUT_TO_CHANGE]: 'viewerLabel transition-in',
-        [JUST_CHANGED]: 'viewerLabel transition-out'
+        [ABOUT_TO_CHANGE]: 'viewerLabel transition-out',
+        [JUST_CHANGED]: 'viewerLabel transition-in'
     }[state];
 
     return (
