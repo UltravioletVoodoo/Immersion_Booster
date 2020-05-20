@@ -55,8 +55,9 @@ const combatCss = css`
 
 
 function Player(props) {
-    const { id } = props
+    const { id, deleter } = props
     const basePath = ['players', id]
+    const deleteMe = () => deleter(id)
 
     return (
         <>
@@ -70,6 +71,7 @@ function Player(props) {
                 <div className='input'>
                     <CampaignSimpleInput path={basePath.concat(1)} placeholder='Character Name' />
                 </div>
+                <button onClick={deleteMe}>Delete</button>
             </div>
             <style jsx>{elementGroupCss}</style>
         </>
@@ -82,7 +84,7 @@ function Combat(props) {
 
     let baddieList = []
     for (let baddie in baddies) {
-        baddieList[baddie] = (<CampaignSimpleInput path={['encounters', id, 2, baddie]} placeholder='Enemy Name' />)
+        baddieList[baddie] = (<CampaignSimpleInput key={baddie} path={['encounters', id, 2, baddie]} placeholder='Enemy Name' />)
     }
 
     function addBaddie() {
@@ -108,9 +110,10 @@ function Combat(props) {
 }
 
 function Encounter(props) {
-    const { id } = props
+    const { id, deleter } = props
     const basePath = ['encounters', id]
     const [combat, setCombat] = useState(false)
+    const deleteMe = () => deleter(id)
 
     function toggleCombat() {
         if (typeof window === 'undefined') return
@@ -143,6 +146,7 @@ function Encounter(props) {
                     <CampaignSimpleInput path={basePath.concat(1)} placeholder='Encounter Image URL' />
                 </div>
                 <button onClick={toggleCombat}>{combat ? 'Delete' : 'Add'} Combat</button>
+                <button onClick={deleteMe}>Delete</button>
                 {combat && (
                     <Combat id={id} />
                 )}
@@ -152,19 +156,19 @@ function Encounter(props) {
     )
 }
 
-function getAppropriateComponent(setName, id) {
+function getAppropriateComponent(setName, id, deleter) {
     switch(setName) {
-        case 'players': return <Player key={id} id={id} />
-        case 'encounters': return <Encounter key={id} id={id} />
+        case 'players': return <Player key={id} id={id} deleter={deleter} />
+        case 'encounters': return <Encounter key={id} id={id} deleter={deleter} />
         default: return <p>Oops. No appropriate set found for {setName}</p>
     }
 }
 
 
 function InputSet(props) {
-    const { set, setName } = props
+    const { set, setName, deleter } = props
     for (let setElementId in set) {
-        set[setElementId] = (getAppropriateComponent(setName, setElementId))
+        set[setElementId] = (getAppropriateComponent(setName, setElementId, deleter))
     }
     return (
         <>
@@ -192,6 +196,14 @@ export default function CampaignInputSet(props) {
         localStorage.setItem('campaign', JSON.stringify(campaign))
     }
 
+    function removeFromSet(index) {
+        if (typeof window === 'undefined') return
+        let campaign = JSON.parse(localStorage.getItem('campaign'))
+        campaign[setName].splice(index, 1)
+        localStorage.setItem('campaign', JSON.stringify(campaign))
+        setSet(campaign[setName])
+    }
+
     useEffect(() => {
         loadSet()
     }, [])
@@ -200,7 +212,7 @@ export default function CampaignInputSet(props) {
         <div>
             {set && (
                 <div className='inputSet'>
-                    <InputSet set={set} setName={setName} />
+                    <InputSet set={set} setName={setName} deleter={removeFromSet} />
                     <div className='addBtnContainer'>
                         <button className='addBtn' onClick={addToSet}>Add new {setName}</button>
                     </div>

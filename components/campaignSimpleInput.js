@@ -48,7 +48,7 @@ function saveData(newValue, path) {
 
 export default function CampaignSimpleInput(props) {
     const { path, placeholder, label=true } = props
-    const [innerValue, setInnerValue] = useState(undefined)
+    const [innerValue, setInnerValue] = useState('')
 
     function loadInnerValue() {
         if (typeof window === 'undefined') return
