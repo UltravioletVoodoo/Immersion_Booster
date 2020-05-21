@@ -38,7 +38,7 @@ export default function ViewerPage() {
                 <title>Immersion Viewer</title>
             </Head>
             <Base />
-            <Viewer state={state} />
+            <Viewer state={state} setState={setState} />
             <style jsx>{viewerPageCss}</style>
         </div>
     )

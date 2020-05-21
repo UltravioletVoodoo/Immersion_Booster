@@ -41,7 +41,7 @@ const viewerCss = css`
 `
 
 export default function Viewer(props) {
-    const { state } = props
+    const { state, setState } = props
     const comboClasses = `imageCombo ${state.isCombat ? 'combat' : 'encounter'}Variant`
     return (
         <>
@@ -55,7 +55,7 @@ export default function Viewer(props) {
             </div>
             {state.isCombat && (
                 <div className='combatViewer'>
-                    <InitiativeTracker combatants={state.combat.combatants} turn={state.combat.turn} />
+                    <InitiativeTracker state={state} setState={setState} />
                 </div>
             )}
             <style jsx>{viewerCss}</style>

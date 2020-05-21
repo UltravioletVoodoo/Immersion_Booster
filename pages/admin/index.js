@@ -75,7 +75,7 @@ export default function Admin() {
                 </div>
             </div>
             <div className='viewerPreview'>
-                <Viewer state={state} />
+                <Viewer state={state} setState={setState} />
             </div>
             <div className='templateSelector'>
                 <TemplateSelector state={state} setState={setState} />

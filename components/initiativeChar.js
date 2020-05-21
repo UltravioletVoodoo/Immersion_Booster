@@ -9,6 +9,18 @@ const initiativeCharCss = css`
     position: relative;
     transform: skew(-20deg);
 }
+.initiativeChar:hover .deleteBtn {
+    opacity: 1;
+}
+.deleteBtn {
+    width: 40px;
+    top: 10%;
+    position: absolute;
+    right: 5%;
+    opacity: 0;
+    cursor: pointer;
+    transition: 1s;
+}
 .activeTurn {
     animation-name: activeTurnAnimation;
     animation-duration: 1s;
@@ -66,7 +78,7 @@ const initiativeCharCss = css`
 }
 .playerNameText {
     position: absolute;
-    left: 70%;
+    right: calc(10% + 40px);
     top: 50%;
     transform: translateY(-50%);
     font-size: 20px;
@@ -75,7 +87,11 @@ const initiativeCharCss = css`
 `
 
 export default function InitiativeChar(props) {
-    const { id, name, playerName, myTurn } = props
+    const { id, name, playerName, myTurn, deleter } = props
+
+    function deleteMe() {
+        deleter(id)
+    }
 
     const initiativeCharClassNames = `initiativeChar ${myTurn ? 'activeTurn' : 'inactiveTurn'}`
 
@@ -91,6 +107,7 @@ export default function InitiativeChar(props) {
                         <span className='text playerNameText'>{playerName}</span>
                     )}
                 </div>
+                <img onClick={deleteMe} className='deleteBtn' src='/trash-can.svg'></img>
             </div>
             <style jsx>{initiativeCharCss}</style>
         </>
