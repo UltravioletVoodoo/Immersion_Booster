@@ -2,23 +2,25 @@ import useChangeHandler from '../hooks/useChangeHandler';
 import { UNCHANGED, ABOUT_TO_CHANGE, JUST_CHANGED } from '../hooks/useChangeHandler';
 import css from "styled-jsx/css";
 
-const viewerLabelCss = css`
-.viewerLabel {
-    transition: 1s;
-    color: yellow;
-    font-size: 30px;
-    margin: 0px;
+function getStyles(isSmall) {
+    return css`
+        .viewerLabel {
+            transition: 1s;
+            color: yellow;
+            font-size: ${isSmall ? '15' : '30'}px;
+            margin: 0px;
+        }
+        .transition-in {
+            opacity: 1;
+        }
+        .transition-out {
+            opacity: 0;
+        }
+    `
 }
-.transition-in {
-    opacity: 1;
-}
-.transition-out {
-    opacity: 0;
-}
-`
 
 export default function ViewerLabel(props) {
-    const { text } = props
+    const { text, isSmall } = props
     const [state, labelText] = useChangeHandler(text, 1000)
     const transition = {
         [UNCHANGED]: 'viewerLabel',
@@ -26,10 +28,12 @@ export default function ViewerLabel(props) {
         [JUST_CHANGED]: 'viewerLabel transition-in'
     }[state];
 
+    const styles = getStyles(isSmall)
+
     return (
         <>
             <p className={transition}>{labelText}</p>
-            <style jsx>{viewerLabelCss}</style>
+            <style jsx>{styles}</style>
         </>
     )
 }
