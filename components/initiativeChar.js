@@ -1,16 +1,23 @@
+import { useRef } from "react"
 
 
 
 export default function InitiativeChar(props) {
-    const { id, name, playerName, myTurn, deleter, isSmall } = props
+    const { id, name, playerName, myTurn, killer, deleter, isSmall, isAlive } = props
+    const initiativeCharRef = useRef(null)
 
     function deleteMe() {
-        deleter(id)
+        function handleDeletion() {
+            initiativeCharRef.current.removeEventListener('animationend', handleDeletion)
+            deleter(id)
+        }
+        initiativeCharRef.current.addEventListener('animationend', handleDeletion)
+        killer(id)
     }
 
     return (
         <>
-            <div className='initiativeChar'>
+            <div ref={initiativeCharRef} className={`initiativeChar${isAlive ? '' : ' animate'}`}>
                 <div className='order'>
                     <span className='text orderText'>{parseInt(id) + 1}</span>
                 </div>
@@ -21,6 +28,7 @@ export default function InitiativeChar(props) {
                     )}
                 </div>
                 <img onClick={deleteMe} className='deleteBtn' src='/trash-can.svg'></img>
+                <div className={`slasher${isAlive ? '' : ' animate'}`} />
             </div>
             <style jsx>{`
                 .initiativeChar {
@@ -31,7 +39,22 @@ export default function InitiativeChar(props) {
                     position: relative;
                     left: ${myTurn ? '-15%' : '0'};
                     transform: skew(-20deg);
-                    transition: 1s;
+                }
+                .initiativeChar.animate {
+                    animation-name: deathAnimation;
+                    animation-duration: 1s;
+                    animation-fill-mode: forwards;
+                }
+                @keyframes deathAnimation {
+                    0% {
+                        opacity: 1;
+                    }
+                    40% {
+                        opacity: 1;
+                    }
+                    100% {
+                        opacity: 0;
+                    }
                 }
                 .initiativeChar:hover .deleteBtn {
                     opacity: 1;
@@ -44,6 +67,28 @@ export default function InitiativeChar(props) {
                     opacity: 0;
                     cursor: pointer;
                     transition: 1s;
+                }
+                .slasher {
+                    height: 15px;
+                    background-color: white;
+                    position: absolute;
+                    top: 50%;
+                    left: -15px;
+                    transform: translateY(-50%);
+                    border-radius: 50%;
+                }
+                .slasher.animate {
+                    animation-name: slashAnimation;
+                    animation-duration: 1s;
+                    animation-fill-mode: forwards;
+                }
+                @keyframes slashAnimation {
+                    0% {
+                        width: 0; 
+                    }
+                    20% {
+                        width: calc(100% + 30px)
+                    }
                 }
                 .text {
                     font-size: ${isSmall ? '16' : '30'}px;
