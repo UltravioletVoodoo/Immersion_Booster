@@ -7,3 +7,21 @@ export const blankState = {
         combatants: []
     }
 }
+
+export const blankCampaign = {
+    name: '',
+    players: [],
+    encounters: []
+}
+
+export const blankEncounter = {
+    imageLabel: '',
+    imageUrl: '',
+    combatants: []
+}
+
+export const blankCombatant = {
+    name: '',
+    playerName:  '',
+    isAlive: true
+}

@@ -46,9 +46,9 @@ export default function PreviewSet(props) {
         <PreviewSetElement 
             key={previewId} 
             id={previewId} 
-            label={set[previewId][0]} 
-            image={set[previewId][1]} 
-            enemies={set[previewId][2]} 
+            label={set[previewId].imageLabel} 
+            image={set[previewId].imageUrl} 
+            enemies={set[previewId].combatants} 
             state={state} 
             setState={setState} 
             />

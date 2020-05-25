@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import CampaignSimpleInput from "./campaignSimpleInput"
 import css from "styled-jsx/css"
+import { blankCombatant, blankEncounter } from "../util/placeholders"
 
 
 const elementGroupCss = css`
@@ -66,10 +67,10 @@ function Player(props) {
                     <label>Player {parseInt(id) + 1}: </label>
                 </div>
                 <div className='input'>
-                    <CampaignSimpleInput path={basePath.concat(0)} placeholder='Player Name' />
+                    <CampaignSimpleInput path={basePath.concat('playerName')} placeholder='Player Name' />
                 </div>
                 <div className='input'>
-                    <CampaignSimpleInput path={basePath.concat(1)} placeholder='Character Name' />
+                    <CampaignSimpleInput path={basePath.concat('name')} placeholder='Character Name' />
                 </div>
                 <button onClick={deleteMe}>Delete</button>
             </div>
@@ -80,20 +81,25 @@ function Player(props) {
 
 function Combat(props) {
     const { id } = props
-    const [baddies, setBaddies] = useState([''])
+    const [baddies, setBaddies] = useState([])
 
     let baddieList = []
     for (let baddie in baddies) {
-        baddieList[baddie] = (<CampaignSimpleInput key={baddie} path={['encounters', id, 2, baddie]} placeholder='Enemy Name' />)
+        baddieList[baddie] = (<CampaignSimpleInput key={baddie} path={['encounters', id, 'combatants', baddie, 'name']} placeholder='Enemy Name' />)
     }
 
     function addBaddie() {
-        setBaddies(baddies.concat(''))
+        setBaddies(baddies.concat({...blankCombatant}))
+
+        // Make room in local storage
+        let campaign = JSON.parse(localStorage.getItem('campaign'))
+        campaign.encounters[id].combatants.push({...blankCombatant})
+        localStorage.setItem('campaign', JSON.stringify(campaign))
     }
 
     function loadBaddies() {
         if (typeof window === 'undefined') return
-        setBaddies(JSON.parse(localStorage.getItem('campaign')).encounters[id][2])
+        setBaddies(JSON.parse(localStorage.getItem('campaign')).encounters[id].combatants)
     }
 
     useEffect(() => {
@@ -118,7 +124,7 @@ function Encounter(props) {
     function toggleCombat() {
         if (typeof window === 'undefined') return
         let campaign = JSON.parse(localStorage.getItem('campaign'))
-        campaign.encounters[id][2] = []
+        campaign.encounters[id].combatants = []
         localStorage.setItem('campaign', JSON.stringify(campaign))
         setCombat(!combat)
     }
@@ -126,7 +132,7 @@ function Encounter(props) {
     function handlePreexistingCombat() {
         if (typeof window === 'undefined') return
         const campaign = JSON.parse(localStorage.getItem('campaign'))
-        if (campaign.encounters[id][2] && campaign.encounters[id][2].length > 0) setCombat(true)
+        if (campaign.encounters[id].combatants.length > 0) setCombat(true)
     }
 
     useEffect(() => {
@@ -140,10 +146,10 @@ function Encounter(props) {
                     <label>Encounter {parseInt(id) + 1}: </label>
                 </div>
                 <div className='input'>
-                    <CampaignSimpleInput path={basePath.concat(0)} placeholder='Encounter Label' />
+                    <CampaignSimpleInput path={basePath.concat('imageLabel')} placeholder='Encounter Label' />
                 </div>
                 <div className='input'>
-                    <CampaignSimpleInput path={basePath.concat(1)} placeholder='Encounter Image URL' />
+                    <CampaignSimpleInput path={basePath.concat('imageUrl')} placeholder='Encounter Image URL' />
                 </div>
                 <button onClick={toggleCombat}>{combat ? 'Delete' : 'Add'} Combat</button>
                 <button onClick={deleteMe}>Delete</button>
@@ -192,7 +198,17 @@ export default function CampaignInputSet(props) {
 
         // Make room in local storage for the new addition
         let campaign = JSON.parse(localStorage.getItem('campaign'))
-        campaign[setName].push([])
+        switch(setName) {
+            case 'players':
+                campaign['players'].push({...blankCombatant})
+                break
+            case 'encounters':
+                campaign['encounters'].push({...blankEncounter})
+                break
+            default:
+                throw `Campaign input set must be one of 'players'|'encounters'. ${setName} given`
+
+        }
         localStorage.setItem('campaign', JSON.stringify(campaign))
     }
 

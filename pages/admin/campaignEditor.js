@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import CampaignInputSet from "../../components/campaignInputSet";
 import css from "styled-jsx/css"
 import CampaignTitle from "../../components/campaignTitle";
+import { blankCampaign } from '../../util/placeholders';
 
 const campaignEditorCss = css`
 .campaignEditor {
@@ -19,12 +20,7 @@ export default function CampaignEditor() {
     
     function saveDummyCampaign() {
         if (typeof window === 'undefined') return
-        const dummyCampaign = {
-            name: '',
-            players: [],
-            encounters: [],
-            combats: []
-        }
+        const dummyCampaign = {... blankCampaign}
         localStorage.setItem('campaign', JSON.stringify(dummyCampaign))
         return dummyCampaign
     }
