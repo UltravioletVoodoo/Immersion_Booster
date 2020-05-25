@@ -3,7 +3,7 @@ export const blankState = {
     imageUrl: '',
     isCombat: false,
     combat: {
-        turn: 1,
+        turn: 0,
         combatants: []
     }
 }

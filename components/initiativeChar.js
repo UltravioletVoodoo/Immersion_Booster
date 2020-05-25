@@ -39,6 +39,7 @@ export default function InitiativeChar(props) {
                     position: relative;
                     left: ${myTurn ? '-15%' : '0'};
                     transform: skew(-20deg);
+                    transition: 1s;
                 }
                 .initiativeChar.animate {
                     animation-name: deathAnimation;

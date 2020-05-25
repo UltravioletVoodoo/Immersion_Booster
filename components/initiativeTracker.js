@@ -12,7 +12,16 @@ export default function InitiativeTracker(props) {
 
     function deleter(id) {
         let newState = {... state}
+
+        // Handle 2 edge cases (last turn character dies on its turn, character above turn dies)
+        console.log(turn, id, combatants.length, combatants.length - 1)
+        if (turn === id && id === combatants.length - 1) {
+            newState.combat.turn = 0
+        } else if (id < turn) {
+            newState.combat.turn -= 1
+        }
         newState.combat.combatants.splice(id, 1)
+
         setState(newState)
     }
 
@@ -21,7 +30,7 @@ export default function InitiativeTracker(props) {
         charList.push(
             <InitiativeChar 
                 key={charId}
-                id={charId}
+                id={parseInt(charId)}
                 playerName={combatants[charId].playerName}
                 name={combatants[charId].name}
                 myTurn={turn === parseInt(charId)}
