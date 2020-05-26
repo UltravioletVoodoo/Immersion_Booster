@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import { blankState } from '../../util/placeholders'
 import NextTurn from '../../components/nextTurn'
 import Viewer from '../../components/viewer'
+import CampaignNotes from '../../components/campaignNotes'
 
 
 const AdminCss = css`
@@ -23,7 +24,7 @@ const AdminCss = css`
     top: 0;
     left: 50vw;
     right: 0;
-    bottom: 0;
+    bottom: 50vh;
     background-color: white;
 }
 .viewerPreview {
@@ -33,6 +34,13 @@ const AdminCss = css`
     right: 50vw;
     bottom: 0;
     background-color: darkcyan;
+}
+.campaignNotes {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    right: 0;
+    bottom: 0;
 }
 `
 
@@ -79,6 +87,9 @@ export default function Admin() {
             </div>
             <div className='templateSelector'>
                 <TemplateSelector state={state} setState={setState} />
+            </div>
+            <div className='campaignNotes'>
+                <CampaignNotes />
             </div>
             <style jsx>{AdminCss}</style>
         </div>

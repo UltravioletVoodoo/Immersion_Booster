@@ -12,9 +12,10 @@ const previewSetCss = css`
 const previewSetElementCss = css`
 .previewSetElement {
     position: relative;
-    height: 200px;
-    width: 200px;
-    left: calc(50% - 100px);
+    height: 100px;
+    width: 100px;
+    left: 50%;
+    transform: translateX(-50%);
     margin-bottom: 10px;
 }
 `

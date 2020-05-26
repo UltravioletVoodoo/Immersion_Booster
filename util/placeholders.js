@@ -11,7 +11,8 @@ export const blankState = {
 export const blankCampaign = {
     name: '',
     players: [],
-    encounters: []
+    encounters: [],
+    notes: ''
 }
 
 export const blankEncounter = {

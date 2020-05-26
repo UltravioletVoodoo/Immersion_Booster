@@ -9,10 +9,21 @@ const TemplateSelectorCss = css`
     width: 100%;
     height: 100%;
 }
-.campaignEditBtn {
+.campaignPreviews {
     position: absolute;
-    bottom: 0;
+    right: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    border: 1px solid black;
 }
+.campaignControls {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    border: 1px solid black;
 `
 
 
@@ -33,14 +44,16 @@ export default function TemplateSelector(props) {
     return (
         <>
             <div className='templateSelectorContainer'>
-                {campaign ? (
-                    <PreviewSet set={campaign.encounters} state={state} setState={setState} />
-                ) : (
-                    <div>
-                        <p>No campaign is present in storage, import one below</p>
-                    </div>
-                )}
-                <div className='campaignEditBtn'>
+                <div className='campaignPreviews'>
+                    {campaign ? (
+                        <PreviewSet set={campaign.encounters} state={state} setState={setState} />
+                    ) : (
+                        <div>
+                            <p>No campaign is present in storage, import one below</p>
+                        </div>
+                    )}
+                </div>
+                <div className='campaignControls'>
                     <Link href='/admin/campaignEditor'>
                         <button>Edit/Upload Campaigns</button>
                     </Link>

@@ -6,12 +6,31 @@ import CampaignInputSet from "../../components/campaignInputSet";
 import css from "styled-jsx/css"
 import CampaignTitle from "../../components/campaignTitle";
 import { blankCampaign } from '../../util/placeholders';
+import CampaignNotesEditor from '../../components/campaignNotesEditor';
 
 const campaignEditorCss = css`
 .campaignEditor {
-    position: absolute;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
     left: 0;
+    bottom: 0;
+}
+.templates {
+    position: absolute;
+    left: 0;
+    right: 50%;
+    top: 0;
+    height: 100%;
+    overflow-y: scroll;
+}
+.notes {
+    position: absolute;
+    left: 50%;
+    right: 0;
+    top: 0;
+    height: 100%;
+    overflow-y: scroll;
 }
 `
 
@@ -45,14 +64,19 @@ export default function CampaignEditor() {
             </Head>
             <Base />
             <div className='campaignEditor'>
-                <Link href="/admin">
-                    <button>To Admin Dashboard</button>
-                </Link>
                 {campaign && (
                     <>
-                        <CampaignTitle />
-                        <CampaignInputSet setName='players' />
-                        <CampaignInputSet setName='encounters' />
+                        <div className='templates'>
+                            <Link href="/admin">
+                                <button>To Admin Dashboard</button>
+                            </Link>
+                            <CampaignTitle />
+                            <CampaignInputSet setName='players' />
+                            <CampaignInputSet setName='encounters' />
+                        </div>
+                        <div className='notes'>
+                            <CampaignNotesEditor />
+                        </div>
                     </>
                 )}
             </div>
