@@ -1,13 +1,12 @@
 import Head from 'next/head'
 import Base from '../../components/base'
 import css from "styled-jsx/css"
-import FieldEditor from '../../components/fieldEditor'
 import TemplateSelector from '../../components/templateSelector'
 import { useState, useEffect } from 'react'
 import { blankState } from '../../util/placeholders'
-import NextTurn from '../../components/nextTurn'
 import Viewer from '../../components/viewer'
 import CampaignNotes from '../../components/campaignNotes'
+import LiveEditors from '../../components/liveEditors'
 
 
 const AdminCss = css`
@@ -18,6 +17,11 @@ const AdminCss = css`
     bottom: 50vh;
     right: 50vw;
     background-color: grey;
+}
+.console {
+    position: fixed;
+    top: 0;
+    left:
 }
 .templateSelector {
     position: fixed;
@@ -76,11 +80,7 @@ export default function Admin() {
             <Base />
             <h1>Admin Page</h1>
             <div className='manualEditors'>
-                <FieldEditor fieldName='imageUrl' placeHolder='Image URL' state={state} setState={setState} />
-                <FieldEditor fieldName="imageLabel" placeHolder='Label Text' state={state} setState={setState} />
-                <div>
-                    <NextTurn state={state} setState={setState} />
-                </div>
+                <LiveEditors state={state} setState={setState} />
             </div>
             <div className='viewerPreview'>
                 <Viewer state={state} setState={setState} isSmall={true} />
