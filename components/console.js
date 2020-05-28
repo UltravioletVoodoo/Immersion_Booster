@@ -13,22 +13,17 @@ export default function Console(props) {
     }
 
     function computeResponse() {
-        console.log(inputValue)
         saveToHistory(inputValue)
+        setInputValue('')
     }
 
     function onInputChange(e) {
         const newValue = e.target.value
-        console.log('inputValue: ', inputValue)
-        console.log('newValue: ', newValue)
         setInputValue(newValue)
     }
 
     function keyPressHandler(e) {
         if (e.key === 'Enter') {
-            console.log('Enter was pressed...')
-            console.log('inputValue: ', inputValue)
-            console.log('type of inputValue: ', typeof inputValue)
             computeResponse()
         }
     }
@@ -39,7 +34,7 @@ export default function Console(props) {
         return () => {
             window.removeEventListener('keypress', keyPressHandler)
         }
-    }, [])
+    }, [inputValue])
 
     return (
         <>
