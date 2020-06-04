@@ -1,20 +1,25 @@
 import { useState, useRef, useEffect } from "react"
+import parser from "../util/parser"
+import { keycodes } from "../util/keycodes"
+import { blankHistory } from "../util/placeholders"
 
 
 
 
 export default function Console(props) {
     const { state, setState } = props
-    const [history, setHistory] = useState([])
+    const [history, setHistory] = useState({... blankHistory})
     const [inputValue, setInputValue] = useState('')
 
-    function saveToHistory(response) {
-        setHistory(history.concat(<p key={history.length}>{response}</p>))
-    }
-
     function computeResponse() {
-        saveToHistory(inputValue)
-        setInputValue('')
+        parser(
+            inputValue,
+            setInputValue,
+            history,
+            setHistory,
+            state,
+            setState
+        )
     }
 
     function onInputChange(e) {
@@ -22,17 +27,17 @@ export default function Console(props) {
         setInputValue(newValue)
     }
 
-    function keyPressHandler(e) {
-        if (e.key === 'Enter') {
+    function keyUpHandler(e) {
+        if (e.keyCode === keycodes.enter) {
             computeResponse()
         }
     }
 
     useEffect(() => {
-        window.addEventListener('keypress', keyPressHandler)
+        window.addEventListener('keyup', keyUpHandler)
         
         return () => {
-            window.removeEventListener('keypress', keyPressHandler)
+            window.removeEventListener('keyup', keyUpHandler)
         }
     }, [inputValue])
 
@@ -40,7 +45,7 @@ export default function Console(props) {
         <>
             <div className='consoleBase console'>
                 <div className='outputHistory'>
-                    {history}
+                    {history.consoleHistory.map((h, index) => (<p key={index}>{h.input} -> {h.response}</p>))}
                 </div>
                 <div className='consoleBase inputBox'>
                     <input value={inputValue} onChange={onInputChange}></input>
@@ -56,7 +61,8 @@ export default function Console(props) {
                     font-family: monospace;
                 }
                 .outputHistory {
-                    
+                    overflow-y: scroll;
+                    height: calc(100% - 35px)
                 }
                 .inputBox {
                     position: absolute;

@@ -35,3 +35,8 @@ export const showdownOptions = {
     requireSpaceBeforeHeadingText: true,
     openLinksInNewWindow: true
 }
+
+export const blankHistory = {
+    consoleHistory: [],
+    commandHistory: []
+}
