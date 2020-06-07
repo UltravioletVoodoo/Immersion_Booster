@@ -24,8 +24,7 @@ export const blankEncounter = {
 
 export const blankCombatant = {
     name: '',
-    playerName:  '',
-    isAlive: true
+    playerName:  ''
 }
 
 export const showdownOptions = {

@@ -8,7 +8,9 @@ export default function CampaignNotes() {
     function loadNotes() {
         if (typeof window === 'undefined') return
         const converter = new showdown.Converter(showdownOptions)
-        setNotes(converter.makeHtml(JSON.parse(localStorage.getItem('campaign')).notes))
+        const campaign = JSON.parse(localStorage.getItem('campaign'))
+        if (!campaign) return
+        setNotes(converter.makeHtml(campaign.notes))
     }
 
     useEffect(() => {
