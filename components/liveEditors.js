@@ -15,7 +15,7 @@ export default function LiveEditors(props) {
                 )}
             </div>
             <div className='liveEditor selectedCharControls'>
-                <SelectedCharacterControls />
+                <SelectedCharacterControls state={state} setState={setState} />
             </div>
             <style jsx>{`
                 .liveEditor {
