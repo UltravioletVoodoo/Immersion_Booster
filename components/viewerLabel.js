@@ -2,12 +2,12 @@ import useChangeHandler from '../hooks/useChangeHandler';
 import { UNCHANGED, ABOUT_TO_CHANGE, JUST_CHANGED } from '../hooks/useChangeHandler';
 import css from "styled-jsx/css";
 
-function getStyles(isSmall) {
+function getStyles(isAdmin) {
     return css`
         .viewerLabel {
             transition: 1s;
             color: yellow;
-            font-size: ${isSmall ? '15' : '30'}px;
+            font-size: ${isAdmin ? '15' : '30'}px;
             margin: 0px;
         }
         .transition-in {
@@ -20,7 +20,7 @@ function getStyles(isSmall) {
 }
 
 export default function ViewerLabel(props) {
-    const { text, isSmall } = props
+    const { text, isAdmin } = props
     const [state, labelText] = useChangeHandler(text, 1000)
     const transition = {
         [UNCHANGED]: 'viewerLabel',
@@ -28,7 +28,7 @@ export default function ViewerLabel(props) {
         [JUST_CHANGED]: 'viewerLabel transition-in'
     }[state];
 
-    const styles = getStyles(isSmall)
+    const styles = getStyles(isAdmin)
 
     return (
         <>

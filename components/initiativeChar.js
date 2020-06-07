@@ -3,21 +3,12 @@ import { useRef } from "react"
 
 
 export default function InitiativeChar(props) {
-    const { id, name, playerName, myTurn, killer, deleter, isSmall, isAlive } = props
+    const { id, name, playerName, myTurn, isAdmin } = props
     const initiativeCharRef = useRef(null)
-
-    function deleteMe() {
-        function handleDeletion() {
-            initiativeCharRef.current.removeEventListener('animationend', handleDeletion)
-            deleter(id)
-        }
-        initiativeCharRef.current.addEventListener('animationend', handleDeletion)
-        killer(id)
-    }
 
     return (
         <>
-            <div ref={initiativeCharRef} className={`initiativeChar${isAlive ? '' : ' animate'}`}>
+            <div ref={initiativeCharRef} className='initiativeChar'>
                 <div className='order'>
                     <span className='text orderText'>{parseInt(id) + 1}</span>
                 </div>
@@ -27,79 +18,27 @@ export default function InitiativeChar(props) {
                         <span className='text playerNameText'>{playerName}</span>
                     )}
                 </div>
-                <img onClick={deleteMe} className='deleteBtn' src='/trash-can.svg'></img>
-                <div className={`slasher${isAlive ? '' : ' animate'}`} />
             </div>
             <style jsx>{`
                 .initiativeChar {
                     width: 100%;
-                    height: ${isSmall ? '20' : '50'}px;
-                    margin: ${isSmall ? '4' : '10'}px 0 ${isSmall ? '4' : '10'}px 0;
+                    height: ${isAdmin ? '20' : '50'}px;
+                    margin: ${isAdmin ? '4' : '10'}px 0 ${isAdmin ? '4' : '10'}px 0;
                     background-color: red;
                     position: relative;
                     left: ${myTurn ? '-15%' : '0'};
                     transform: skew(-20deg);
                     transition: 1s;
                 }
-                .initiativeChar.animate {
-                    animation-name: deathAnimation;
-                    animation-duration: 1s;
-                    animation-fill-mode: forwards;
-                }
-                @keyframes deathAnimation {
-                    0% {
-                        opacity: 1;
-                    }
-                    40% {
-                        opacity: 1;
-                    }
-                    100% {
-                        opacity: 0;
-                    }
-                }
-                .initiativeChar:hover .deleteBtn {
-                    opacity: 1;
-                }
-                .deleteBtn {
-                    height: 80%;
-                    top: 10%;
-                    position: absolute;
-                    right: 5px;
-                    opacity: 0;
-                    cursor: pointer;
-                    transition: 1s;
-                }
-                .slasher {
-                    height: 15px;
-                    background-color: white;
-                    position: absolute;
-                    top: 50%;
-                    left: -15px;
-                    transform: translateY(-50%);
-                    border-radius: 50%;
-                }
-                .slasher.animate {
-                    animation-name: slashAnimation;
-                    animation-duration: 1s;
-                    animation-fill-mode: forwards;
-                }
-                @keyframes slashAnimation {
-                    0% {
-                        width: 0; 
-                    }
-                    20% {
-                        width: calc(100% + 30px)
-                    }
-                }
                 .text {
-                    font-size: ${isSmall ? '16' : '30'}px;
+                    font-size: ${isAdmin ? '16' : '30'}px;
                     font-weight: bolder;
                     font-family: fantasy;
                 }
                 .order {
                     position: absolute;
                     height: 100%;
-                    width: ${isSmall ? '20' : '50'}px;
+                    width: ${isAdmin ? '20' : '50'}px;
                     background-color: yellow;
                 }
                 .orderText {
@@ -112,8 +51,8 @@ export default function InitiativeChar(props) {
                 .name {
                     position: absolute;
                     height: 100%;
-                    width: calc(100% - ${isSmall ? '40' : '100'}px);
-                    left: ${isSmall ? '40' : '100'}px;
+                    width: calc(100% - ${isAdmin ? '40' : '100'}px);
+                    left: ${isAdmin ? '40' : '100'}px;
                 }
                 .nameText {
                     position: absolute;
@@ -122,10 +61,10 @@ export default function InitiativeChar(props) {
                 }
                 .playerNameText {
                     position: absolute;
-                    right: ${isSmall ? '25' : '50'}px;
+                    right: ${isAdmin ? '25' : '50'}px;
                     top: 50%;
                     transform: translateY(-50%);
-                    font-size: ${isSmall ? '12' : '20'}px;
+                    font-size: ${isAdmin ? '12' : '20'}px;
                     color: salmon;
                 }
             `}</style>

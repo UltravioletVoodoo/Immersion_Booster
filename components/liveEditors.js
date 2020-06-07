@@ -1,6 +1,6 @@
 import FieldEditor from "./fieldEditor"
 import NextTurn from './nextTurn'
-import Console from "./console"
+import SelectedCharacterControls from "./selectedCharacterControls"
 
 export default function LiveEditors(props) {
     const { state, setState } = props
@@ -14,8 +14,8 @@ export default function LiveEditors(props) {
                     <NextTurn state={state} setState={setState} />
                 )}
             </div>
-            <div className='liveEditor liveConsole'>
-                <Console state={state} setState={setState} />
+            <div className='liveEditor selectedCharControls'>
+                <SelectedCharacterControls />
             </div>
             <style jsx>{`
                 .liveEditor {
@@ -23,13 +23,13 @@ export default function LiveEditors(props) {
                     width: 50%;
                     height: 100%;
                     top: 0;
+                    border: 1px solid black;
                 }
                 .liveControls {
                     left: 0;
                 }
-                .liveConsole {
+                .selectedCharControls {
                     left: 50%;
-                    background-color: black;
                 }
             `}</style>
         </>

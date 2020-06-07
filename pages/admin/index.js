@@ -16,12 +16,6 @@ const AdminCss = css`
     left: 0;
     bottom: 50vh;
     right: 50vw;
-    background-color: grey;
-}
-.console {
-    position: fixed;
-    top: 0;
-    left:
 }
 .templateSelector {
     position: fixed;
@@ -78,12 +72,11 @@ export default function Admin() {
                 <title>Immersion Admin</title>
             </Head>
             <Base />
-            <h1>Admin Page</h1>
             <div className='manualEditors'>
                 <LiveEditors state={state} setState={setState} />
             </div>
             <div className='viewerPreview'>
-                <Viewer state={state} setState={setState} isSmall={true} />
+                <Viewer state={state} isAdmin={true} />
             </div>
             <div className='templateSelector'>
                 <TemplateSelector state={state} setState={setState} />
