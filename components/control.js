@@ -3,8 +3,8 @@ export default function Control(props) {
 
     return (
         <>
-            <div className='control'>
-                <img className='button' src={icon} onClick={onClick}></img>
+            <div className='control' onClick={onClick}>
+                <img className='button' src={icon}></img>
                 <label className='label'>{label}</label>
             </div>
             <style jsx>{`
@@ -12,7 +12,8 @@ export default function Control(props) {
                     width: 50px;
                     height: 50px;
                     border: 1px solid black;
-                    position: absolute;
+                    position: relative;
+                    cursor: pointer;
                 }
                 .button {
                     position: absolute;
@@ -26,6 +27,7 @@ export default function Control(props) {
                     top: 30px;
                     text-align:center;
                     width: 100%;
+                    cursor: pointer;
                 }
             `}</style>
         </>

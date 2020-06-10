@@ -1,5 +1,7 @@
 import Control from "./control"
 import { useState } from "react"
+import CombatantSelection from "./combatantSelection"
+import CharacterControls from "./characterControls"
 
 export default function SelectedCharacterControls(props) {
     const { state, setState } = props
@@ -11,19 +13,38 @@ export default function SelectedCharacterControls(props) {
         setState(newState)
     }
 
+    function addToSelection(name) {
+        let newCharacters = [... selectedCharacters]
+        newCharacters.push(name)
+        setSelectedCharacters(newCharacters)
+    }
+
+    function removeFromSelection(name) {
+        const newCharacters = selectedCharacters.filter(c => c !== name)
+        console.log(selectedCharacters, newCharacters)
+        setSelectedCharacters(newCharacters)
+    }
+
+    function toggleSelection(name) {
+        if (selectedCharacters.includes(name)) {
+            removeFromSelection(name)
+        } else {
+            addToSelection(name)
+        }
+    }
+
     return (
         <>
             {state.isCombat ? (
                 <>
-                    {selectedCharacters.length > 0 ? (
-                        <div className='characterControls'>
-                            <Control label='Kill' icon='/chewed-skull.svg' activeColor={'red'} onClick={() => console.log('Kill button pressed')} />
-                        </div>
-                    ) : (
                         <div className='characterSelector'>
-                            <p>Placeholder for selection bit</p>
+                            {state.combat.combatants.map((c, i) => (
+                                <CombatantSelection key={i} combatant={c} isSelected={selectedCharacters.includes(c.name)} onClick={toggleSelection} />
+                            ))}
                         </div>
-                    )}
+                        <div className='characterControls'>
+                            <CharacterControls state={state} setState={setState} />
+                        </div>
                 </>
             ) : (
                 <div className='startCombat'>
@@ -42,6 +63,20 @@ export default function SelectedCharacterControls(props) {
                 }
                 .startCombat:hover {
                     opacity: 1;
+                }
+                .characterSelector {
+                    width: 50%;
+                    height: 100%;
+                    border: 1px solid black;
+                    overflow-y: scroll;
+                }
+                .characterControls {
+                    position: absolute;
+                    left: 50%;
+                    top: 0;
+                    width: 50%;
+                    height: 100%;
+                    overFlow-y: scroll;
                 }
             `}</style>
         </>
