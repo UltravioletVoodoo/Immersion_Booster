@@ -1,6 +1,5 @@
-import FieldEditor from "./fieldEditor"
-import NextTurn from './nextTurn'
 import SelectedCharacterControls from "./selectedCharacterControls"
+import GeneralControls from "./generalControls"
 
 export default function LiveEditors(props) {
     const { state, setState } = props
@@ -11,11 +10,7 @@ export default function LiveEditors(props) {
                 <div className='liveEditorsTitleText'>Live Editors</div>
             </div>
             <div className='liveEditor liveControls'>
-                <FieldEditor fieldName='imageUrl' placeholder='Image URL' state={state} setState={setState} />
-                <FieldEditor fieldName="imageLabel" placeHolder='Label Text' state={state} setState={setState} />
-                {state.isCombat && (
-                    <NextTurn state={state} setState={setState} />
-                )}
+                <GeneralControls state={state} setState={setState} />
             </div>
             <div className='liveEditor selectedCharControls'>
                 <SelectedCharacterControls state={state} setState={setState} />

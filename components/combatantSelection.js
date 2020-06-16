@@ -15,10 +15,10 @@ export default function CombatantSelection(props) {
                 .combatantSelection {
                     width: 100%;
                     height: 25px; 
-                    background-color: ${isSelected ? 'red' : 'blue'};
+                    background-color: ${isSelected ? 'darkgrey' : 'lightgray'};
                 }  
                 .combatantSelection:hover {
-                    background-color: purple;
+                    background-color: grey;
                 }
                 .combatantSelectionText {
                     font-size: 14px;
