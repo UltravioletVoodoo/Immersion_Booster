@@ -1,3 +1,5 @@
+import shorten from "../util/textShortener"
+
 export default function CombatantSelection(props) {
     const { isSelected, onClick, combatant } = props
     const { name } = combatant
@@ -7,18 +9,21 @@ export default function CombatantSelection(props) {
     return (
         <>
             <div className='combatantSelection' onClick={onClickHandler}>
-                <span>{name}</span>
+                <span className='combatantSelectionText'>{shorten(name, 10)}</span>
             </div>
             <style jsx>{`
                 .combatantSelection {
                     width: 100%;
-                    height: 25px;
-                    font-size: 16px;
+                    height: 25px; 
                     background-color: ${isSelected ? 'red' : 'blue'};
                 }  
                 .combatantSelection:hover {
                     background-color: purple;
-                }  
+                }
+                .combatantSelectionText {
+                    font-size: 14px;
+                    font-family: monospace;
+                }
             `}</style>
         </>
     )

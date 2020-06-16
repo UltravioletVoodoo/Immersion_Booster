@@ -11,9 +11,9 @@ export default function Control(props) {
                 .control {
                     width: 50px;
                     height: 50px;
-                    border: 1px solid black;
                     position: relative;
                     cursor: pointer;
+                    display: inline-block;
                 }
                 .button {
                     position: absolute;
@@ -23,10 +23,8 @@ export default function Control(props) {
                     cursor: pointer;
                 }
                 .label {
-                    position: absolute;
+                    position: relative;
                     top: 30px;
-                    text-align:center;
-                    width: 100%;
                     cursor: pointer;
                 }
             `}</style>

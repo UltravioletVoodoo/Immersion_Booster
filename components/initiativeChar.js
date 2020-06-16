@@ -1,4 +1,5 @@
 import { useRef } from "react"
+import shorten from "../util/textShortener"
 
 
 
@@ -13,9 +14,9 @@ export default function InitiativeChar(props) {
                     <span className='text orderText'>{parseInt(id) + 1}</span>
                 </div>
                 <div className='name'>
-                    <span className='text nameText'>{name}</span>
+                    <span className='text nameText'>{shorten(name, 10)}</span>
                     {playerName && (
-                        <span className='text playerNameText'>{playerName}</span>
+                        <span className='text playerNameText'>{shorten(playerName, 6)}</span>
                     )}
                 </div>
             </div>

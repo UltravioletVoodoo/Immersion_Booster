@@ -35,8 +35,11 @@ export default function SelectedCharacterControls(props) {
 
     return (
         <>
+            <div className='selectedCharacterControlsTitle'>
+                <div className='selectedCharacterControlsTitleText'>Initiative Tracker Controls</div>
+            </div>
             {state.isCombat ? (
-                <>
+                <div className='controlsContainer'>
                         <div className='characterSelector'>
                             {state.combat.combatants.map((c, i) => (
                                 <CombatantSelection key={i} combatant={c} isSelected={selectedCharacters.includes(c.name)} onClick={toggleSelection} />
@@ -45,7 +48,7 @@ export default function SelectedCharacterControls(props) {
                         <div className='characterControls'>
                             <CharacterControls state={state} setState={setState} />
                         </div>
-                </>
+                </div>
             ) : (
                 <div className='startCombat'>
                     <img onClick={startCombat} src='/swords-emblem.svg'></img>
@@ -64,19 +67,37 @@ export default function SelectedCharacterControls(props) {
                 .startCombat:hover {
                     opacity: 1;
                 }
+                .controlsContainer {
+                    position: absolute;
+                    width: 100%;
+                    height: calc(100% - 25px);
+                    top: 25px;
+                }
                 .characterSelector {
                     width: 50%;
+                    border-right: 1px solid black;
                     height: 100%;
-                    border: 1px solid black;
-                    overflow-y: scroll;
+                    overflow-y: auto;
                 }
                 .characterControls {
                     position: absolute;
                     left: 50%;
                     top: 0;
                     width: 50%;
-                    height: 100%;
-                    overFlow-y: scroll;
+                }
+                .selectedCharacterControlsTitle {
+                    width: 100%;
+                    height: 25px;
+                    position: absolute;
+                    text-align: center;
+                    border-bottom: 1px solid black;
+                }
+                .selectedCharacterControlsTitleText {
+                    font-size: 16px;
+                    position: absolute;
+                    width: 100%;
+                    top: 50%;
+                    transform: translateY(-50%);
                 }
             `}</style>
         </>
