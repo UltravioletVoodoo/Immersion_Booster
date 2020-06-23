@@ -14,7 +14,7 @@ export default function CampaignTitle() {
     return (
         <>
             <div className='campaignName'>
-                <CampaignSimpleInput path={['name']} placeholder='Campaign Name' label={false} />
+                <CampaignSimpleInput path={['name']} placeholder='Campaign Name' />
             </div>
             <style jsx>{campaignNameCss}</style>
         </>

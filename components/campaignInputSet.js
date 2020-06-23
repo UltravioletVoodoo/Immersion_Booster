@@ -67,10 +67,10 @@ function Player(props) {
                     <label>Player {parseInt(id) + 1}: </label>
                 </div>
                 <div className='input'>
-                    <CampaignSimpleInput path={basePath.concat('playerName')} placeholder='Player Name' />
+                    <CampaignSimpleInput path={basePath.concat('playerName')} placeholder='Player Name' label='Player' />
                 </div>
                 <div className='input'>
-                    <CampaignSimpleInput path={basePath.concat('name')} placeholder='Character Name' />
+                    <CampaignSimpleInput path={basePath.concat('name')} placeholder='Character Name' label='Character' />
                 </div>
                 <button onClick={deleteMe}>Delete</button>
             </div>
@@ -85,15 +85,23 @@ function Combat(props) {
 
     let baddieList = []
     for (let baddie in baddies) {
-        baddieList[baddie] = (<CampaignSimpleInput key={baddie} path={['encounters', id, 'combatants', baddie, 'name']} placeholder='Enemy Name' />)
+        baddieList[baddie] = (
+            <div key={baddie}>
+                <CampaignSimpleInput path={['encounters', id, 'combatants', baddie, 'name']} placeholder='Enemy Name' label='Name' />
+                <CampaignSimpleInput path={['encounters', id, 'combatants', baddie, 'health']} placeholder='HP value (ex: 2d4 + 3)' label='HP' />
+                <CampaignSimpleInput path={['encounters', id, 'combatants', baddie, 'initiative']} placeholder='Initiative value (ex: d20 + 2)' label='Initiative' />
+            </div>
+        )
     }
 
     function addBaddie() {
-        setBaddies(baddies.concat({...blankCombatant}))
+        const newBaddie = {... blankCombatant}
+        newBaddie.type = 'enemy'
+        setBaddies(baddies.concat(newBaddie))
 
         // Make room in local storage
         let campaign = JSON.parse(localStorage.getItem('campaign'))
-        campaign.encounters[id].combatants.push({...blankCombatant})
+        campaign.encounters[id].combatants.push(newBaddie)
         localStorage.setItem('campaign', JSON.stringify(campaign))
     }
 
@@ -200,7 +208,9 @@ export default function CampaignInputSet(props) {
         let campaign = JSON.parse(localStorage.getItem('campaign'))
         switch(setName) {
             case 'players':
-                campaign['players'].push({...blankCombatant})
+                const newPlayer = {... blankCombatant}
+                newPlayer.type = 'player'
+                campaign['players'].push(newPlayer)
                 break
             case 'encounters':
                 campaign['encounters'].push({...blankEncounter})

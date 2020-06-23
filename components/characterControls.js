@@ -1,7 +1,7 @@
 import Control from "./control"
 
 export default function CharacterControls(props) {
-    const { state, setState } = props
+    const { state, setState, selectedCharacters } = props
 
     return (
         <>

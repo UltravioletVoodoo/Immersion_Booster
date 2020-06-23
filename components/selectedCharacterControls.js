@@ -46,7 +46,7 @@ export default function SelectedCharacterControls(props) {
                             ))}
                         </div>
                         <div className='characterControls'>
-                            <CharacterControls state={state} setState={setState} />
+                            <CharacterControls state={state} setState={setState} selectedCharacters={selectedCharacters} />
                         </div>
                 </div>
             ) : (

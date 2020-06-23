@@ -24,7 +24,11 @@ export const blankEncounter = {
 
 export const blankCombatant = {
     name: '',
-    playerName:  ''
+    type: '',
+    playerName:  '',
+    health: '',
+    initiative: '',
+    status: []
 }
 
 export const showdownOptions = {
@@ -33,4 +37,10 @@ export const showdownOptions = {
     simpleLineBreaks: true,
     requireSpaceBeforeHeadingText: true,
     openLinksInNewWindow: true
+}
+
+export const statusEffect = {
+    name: '',
+    icon: '',
+    duration: -1
 }

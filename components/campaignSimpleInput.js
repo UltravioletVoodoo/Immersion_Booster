@@ -47,7 +47,7 @@ function saveData(newValue, path) {
 }
 
 export default function CampaignSimpleInput(props) {
-    const { path, placeholder, label=true } = props
+    const { path, placeholder, label } = props
     const [innerValue, setInnerValue] = useState('')
 
     function loadInnerValue() {
@@ -72,7 +72,7 @@ export default function CampaignSimpleInput(props) {
         <>
             {label && (
                 <div className='labelContainer'>
-                    <label>{placeholder}: </label>
+                    <label>{label}: </label>
                 </div>
             )}
             <div className='inputContainer' style={label ? {width: '80%'} : {width: '100%'}}>
