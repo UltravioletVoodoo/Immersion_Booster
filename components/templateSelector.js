@@ -4,7 +4,7 @@ import PreviewSet from "./previewSet"
 
 
 export default function TemplateSelector(props) {
-    const { state, setState, startCombat } = props
+    const { state, setState } = props
     const [campaign, setCampaign] = useState(null)
     
     
@@ -21,7 +21,7 @@ export default function TemplateSelector(props) {
         <>
             <div className='templateSelectorBase campaignPreviews'>
                 {campaign ? (
-                    <PreviewSet set={campaign.encounters} state={state} setState={setState} startCombat={startCombat} />
+                    <PreviewSet set={campaign.encounters} state={state} setState={setState} />
                 ) : (
                     <div>
                         <p>No campaign is present in storage, import one below</p>

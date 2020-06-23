@@ -7,6 +7,7 @@ import { blankState } from '../../util/placeholders'
 import Viewer from '../../components/viewer'
 import CampaignNotes from '../../components/campaignNotes'
 import LiveEditors from '../../components/liveEditors'
+import Modal from '../../components/modal'
 
 
 const AdminCss = css`
@@ -58,13 +59,7 @@ function loadStoredState(setState) {
 
 export default function Admin() {
     const [state, setState] = useState(blankState)
-    
-    function startCombat() {
-        const newState = {... state}
-        newState.isCombat = true
-        setState(newState)
-    }
-    
+
     useEffect(() => {
         loadStoredState(setState)
     }, [])
@@ -80,13 +75,13 @@ export default function Admin() {
             </Head>
             <Base />
             <div className='manualEditors'>
-                <LiveEditors state={state} setState={setState} startCombat={startCombat} />
+                <LiveEditors state={state} setState={setState} />
             </div>
             <div className='viewerPreview'>
                 <Viewer state={state} isAdmin={true} />
             </div>
             <div className='templateSelector'>
-                <TemplateSelector state={state} setState={setState} startCombat={startCombat} />
+                <TemplateSelector state={state} setState={setState} />
             </div>
             <div className='campaignNotes'>
                 <CampaignNotes />

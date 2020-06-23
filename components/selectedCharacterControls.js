@@ -4,7 +4,7 @@ import CombatantSelection from "./combatantSelection"
 import CharacterControls from "./characterControls"
 
 export default function SelectedCharacterControls(props) {
-    const { state, setState, startCombat } = props
+    const { state, setState } = props
     const [selectedCharacters, setSelectedCharacters] = useState([])
 
     function addToSelection(name) {
@@ -45,7 +45,7 @@ export default function SelectedCharacterControls(props) {
                 </div>
             ) : (
                 <div className='startCombat'>
-                    <img onClick={startCombat} src='/swords-emblem.svg'></img>
+                    <img src='/swords-emblem.svg'></img>
                 </div>
             )}
             <style jsx>{`
@@ -56,10 +56,6 @@ export default function SelectedCharacterControls(props) {
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
-                    opacity: 0.5;
-                }
-                .startCombat:hover {
-                    opacity: 1;
                 }
                 .controlsContainer {
                     position: absolute;

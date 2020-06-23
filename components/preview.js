@@ -1,5 +1,7 @@
 import css from "styled-jsx/css"
 import { useEffect, useState } from "react"
+import Modal from "./modal"
+import InitiativePoll from "./initiativePoll"
 
 const previewCss = css`
 .preview {
@@ -65,15 +67,17 @@ function loadPlayers() {
 }
 
 export default function Preview(props) {
-    const { label, image, enemies, state, setState, startCombat } = props
+    const { label, image, enemies, state, setState } = props
     const [players, setPlayers] = useState(null)
+    const [polling, setPolling] = useState(false)
     const enemiesPresent = checkEnemiesPresent(enemies)
     const encounterBtnClasses = `actionButton ${enemiesPresent ? 'leftBtn' : 'centerBtn' }`
 
-    function update() {
+    function update(isCombat) {
         const newState = {... state}
         newState.imageLabel = label
         newState.imageUrl = image
+        newState.isCombat = isCombat
         const newEnemies = enemies ? [...enemies] : []
         newState.combat.combatants = newEnemies.concat(players)
         newState.combat.turn = 0
@@ -81,15 +85,16 @@ export default function Preview(props) {
     }
 
     function encounter() {
-        update()
-        const newState={... state}
-        newState.isCombat = false
-        setState(newState)
+        update(false)
     }
 
     function combat() {
-        update()
-        startCombat()
+        setPolling(true)
+    }
+
+    function startCombat() {
+        setPolling(false)
+        update(true)
     }
 
     useEffect(() => {
@@ -104,6 +109,11 @@ export default function Preview(props) {
                 <img className={encounterBtnClasses} src='/scroll-quill.svg' onClick={encounter}></img>
                 {enemiesPresent && (
                     <img className='actionButton rightBtn' src='/swords-emblem.svg' onClick={combat}></img>
+                )}
+                {polling && (
+                    <Modal>
+                        <InitiativePoll startCombat={startCombat} />
+                    </Modal>
                 )}
             </div>
             <style jsx>{previewCss}</style>

@@ -2,7 +2,7 @@ import SelectedCharacterControls from "./selectedCharacterControls"
 import GeneralControls from "./generalControls"
 
 export default function LiveEditors(props) {
-    const { state, setState, startCombat } = props
+    const { state, setState } = props
 
     return (
         <>
@@ -13,7 +13,7 @@ export default function LiveEditors(props) {
                 <GeneralControls state={state} setState={setState} />
             </div>
             <div className='liveEditor selectedCharControls'>
-                <SelectedCharacterControls state={state} setState={setState} startCombat={startCombat} />
+                <SelectedCharacterControls state={state} setState={setState} />
             </div>
             <style jsx>{`
                 .liveEditor {
