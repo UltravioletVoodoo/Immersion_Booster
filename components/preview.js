@@ -65,28 +65,31 @@ function loadPlayers() {
 }
 
 export default function Preview(props) {
-    const { label, image, enemies, state, setState } = props
+    const { label, image, enemies, state, setState, startCombat } = props
     const [players, setPlayers] = useState(null)
     const enemiesPresent = checkEnemiesPresent(enemies)
     const encounterBtnClasses = `actionButton ${enemiesPresent ? 'leftBtn' : 'centerBtn' }`
 
-    function update(isCombat) {
+    function update() {
         const newState = {... state}
         newState.imageLabel = label
         newState.imageUrl = image
-        newState.isCombat = isCombat
         const newEnemies = enemies ? [...enemies] : []
         newState.combat.combatants = newEnemies.concat(players)
         newState.combat.turn = 0
         setState(newState)
     }
 
-    function startEncounter() {
-        update(false)
+    function encounter() {
+        update()
+        const newState={... state}
+        newState.isCombat = false
+        setState(newState)
     }
 
-    function startCombat() {
-        update(true)
+    function combat() {
+        update()
+        startCombat()
     }
 
     useEffect(() => {
@@ -98,9 +101,9 @@ export default function Preview(props) {
             <div className='preview'>
                 <label className='previewLabel'>{label}</label>
                 <img className='previewImage' src={image}></img>
-                <img className={encounterBtnClasses} src='/scroll-quill.svg' onClick={startEncounter}></img>
+                <img className={encounterBtnClasses} src='/scroll-quill.svg' onClick={encounter}></img>
                 {enemiesPresent && (
-                    <img className='actionButton rightBtn' src='/swords-emblem.svg' onClick={startCombat}></img>
+                    <img className='actionButton rightBtn' src='/swords-emblem.svg' onClick={combat}></img>
                 )}
             </div>
             <style jsx>{previewCss}</style>

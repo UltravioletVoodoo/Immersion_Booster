@@ -4,14 +4,8 @@ import CombatantSelection from "./combatantSelection"
 import CharacterControls from "./characterControls"
 
 export default function SelectedCharacterControls(props) {
-    const { state, setState } = props
+    const { state, setState, startCombat } = props
     const [selectedCharacters, setSelectedCharacters] = useState([])
-    
-    function startCombat() {
-        const newState = {... state}
-        newState.isCombat = true
-        setState(newState)
-    }
 
     function addToSelection(name) {
         let newCharacters = [... selectedCharacters]

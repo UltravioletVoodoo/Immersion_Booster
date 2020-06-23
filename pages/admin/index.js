@@ -55,13 +55,20 @@ function loadStoredState(setState) {
     }
 }
 
+
 export default function Admin() {
     const [state, setState] = useState(blankState)
-
+    
+    function startCombat() {
+        const newState = {... state}
+        newState.isCombat = true
+        setState(newState)
+    }
+    
     useEffect(() => {
         loadStoredState(setState)
     }, [])
-
+    
     useEffect(() => {
         updateStoredState(state)
     }, [state])
@@ -73,13 +80,13 @@ export default function Admin() {
             </Head>
             <Base />
             <div className='manualEditors'>
-                <LiveEditors state={state} setState={setState} />
+                <LiveEditors state={state} setState={setState} startCombat={startCombat} />
             </div>
             <div className='viewerPreview'>
                 <Viewer state={state} isAdmin={true} />
             </div>
             <div className='templateSelector'>
-                <TemplateSelector state={state} setState={setState} />
+                <TemplateSelector state={state} setState={setState} startCombat={startCombat} />
             </div>
             <div className='campaignNotes'>
                 <CampaignNotes />

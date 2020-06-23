@@ -21,7 +21,7 @@ const previewSetElementCss = css`
 `
 
 function PreviewSetElement(props) {
-    const { id, label, image, enemies, state, setState } = props
+    const { id, label, image, enemies, state, setState, startCombat } = props
     return (
         <>
             <div className='previewSetElement'>
@@ -32,6 +32,7 @@ function PreviewSetElement(props) {
                     enemies={enemies} 
                     state={state} 
                     setState={setState} 
+                    startCombat={startCombat}
                 />
             </div>
             <style jsx>{previewSetElementCss}</style>
@@ -40,7 +41,7 @@ function PreviewSetElement(props) {
 }
 
 export default function PreviewSet(props) {
-    const { set, state, setState } = props
+    const { set, state, setState, startCombat } = props
     let previews = []
     for (let previewId in set) {
         previews[previewId] = (
@@ -52,6 +53,7 @@ export default function PreviewSet(props) {
             enemies={set[previewId].combatants} 
             state={state} 
             setState={setState} 
+            startCombat={startCombat}
             />
         )
     }
