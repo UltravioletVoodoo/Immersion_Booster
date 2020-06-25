@@ -1,11 +1,28 @@
+import { useState } from "react"
+
+let modalHandler = undefined
+
+export function renderToModal(component) {
+    if (modalHandler) modalHandler(component)
+}
+
+export function clearModal() {
+    if (modalHandler) modalHandler(undefined)
+}
+
+
 export default function Modal(props) {
-    const { children } = props
+    const { } = props
+    var [ content, setContent ] = useState(undefined)
+    modalHandler = setContent
     
     return (
         <>
-            <div className='modalContainer'>
-                {children}
-            </div>
+            {content && (
+                <div className='modalContainer'>
+                    {content}
+                </div>
+            )}
             <style jsx>{`
                 .modalContainer {
                     position: fixed;

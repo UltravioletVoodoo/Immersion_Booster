@@ -1,6 +1,6 @@
 import css from "styled-jsx/css"
 import { useEffect, useState } from "react"
-import Modal from "./modal"
+import Modal, { renderToModal, clearModal } from "./modal"
 import InitiativePoll from "./initiativePoll"
 
 const previewCss = css`
@@ -69,32 +69,39 @@ function loadPlayers() {
 export default function Preview(props) {
     const { label, image, enemies, state, setState } = props
     const [players, setPlayers] = useState(null)
-    const [polling, setPolling] = useState(false)
     const enemiesPresent = checkEnemiesPresent(enemies)
     const encounterBtnClasses = `actionButton ${enemiesPresent ? 'leftBtn' : 'centerBtn' }`
+    const poll = <InitiativePoll state={state} setState={setState} startCombat={startCombat} />
 
     function update(isCombat) {
         const newState = {... state}
         newState.imageLabel = label
         newState.imageUrl = image
         newState.isCombat = isCombat
-        const newEnemies = enemies ? [...enemies] : []
+        setState(newState)
+    }
+
+    function prepBasics() {
+        const newState = {... state}
+        const newEnemies = enemies ? [... enemies] : []
         newState.combat.combatants = newEnemies.concat(players)
         newState.combat.turn = 0
         setState(newState)
     }
 
     function encounter() {
+        prepBasics()
         update(false)
     }
 
     function combat() {
-        setPolling(true)
+        prepBasics()
+        renderToModal(poll)
     }
 
     function startCombat() {
-        setPolling(false)
         update(true)
+        clearModal()
     }
 
     useEffect(() => {
@@ -109,11 +116,6 @@ export default function Preview(props) {
                 <img className={encounterBtnClasses} src='/scroll-quill.svg' onClick={encounter}></img>
                 {enemiesPresent && (
                     <img className='actionButton rightBtn' src='/swords-emblem.svg' onClick={combat}></img>
-                )}
-                {polling && (
-                    <Modal>
-                        <InitiativePoll state={state} setState={setState} startCombat={startCombat} />
-                    </Modal>
                 )}
             </div>
             <style jsx>{previewCss}</style>

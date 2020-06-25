@@ -74,6 +74,7 @@ export default function Admin() {
                 <title>Immersion Admin</title>
             </Head>
             <Base />
+            <Modal />
             <div className='manualEditors'>
                 <LiveEditors state={state} setState={setState} />
             </div>
