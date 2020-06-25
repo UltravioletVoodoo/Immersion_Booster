@@ -71,31 +71,23 @@ export default function Preview(props) {
     const [players, setPlayers] = useState(null)
     const enemiesPresent = checkEnemiesPresent(enemies)
     const encounterBtnClasses = `actionButton ${enemiesPresent ? 'leftBtn' : 'centerBtn' }`
-    const poll = <InitiativePoll state={state} setState={setState} startCombat={startCombat} />
+    const poll = <InitiativePoll state={state} setState={setState} startCombat={startCombat} players={players} />
 
     function update(isCombat) {
         const newState = {... state}
         newState.imageLabel = label
         newState.imageUrl = image
+        newState.combat.combatants = (enemies ? [... enemies] : []).concat(players)
+        newState.combat.turn = 0
         newState.isCombat = isCombat
         setState(newState)
     }
 
-    function prepBasics() {
-        const newState = {... state}
-        const newEnemies = enemies ? [... enemies] : []
-        newState.combat.combatants = newEnemies.concat(players)
-        newState.combat.turn = 0
-        setState(newState)
-    }
-
     function encounter() {
-        prepBasics()
         update(false)
     }
 
     function combat() {
-        prepBasics()
         renderToModal(poll)
     }
 
