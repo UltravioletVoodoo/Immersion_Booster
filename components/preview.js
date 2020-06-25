@@ -112,7 +112,7 @@ export default function Preview(props) {
                 )}
                 {polling && (
                     <Modal>
-                        <InitiativePoll startCombat={startCombat} />
+                        <InitiativePoll state={state} setState={setState} startCombat={startCombat} />
                     </Modal>
                 )}
             </div>
