@@ -1,4 +1,5 @@
 import { useState } from "react"
+import deepCopy from "../util/deepcopy"
 
 export default function InitiativePoll(props) {
     const { state, setState, startCombat, players } = props
@@ -20,8 +21,7 @@ export default function InitiativePoll(props) {
         next()
     }
 
-    function submitResults() {
-        let newState = {... state}
+    function submitResults(newState) {
         for (let pair of initiativePairs) {
             for (let combatant of newState.combat.combatants) {
                 if (combatant.type !== 'player') continue
@@ -30,12 +30,14 @@ export default function InitiativePoll(props) {
                 }
             }
         }
-        setState(newState)
+        return newState
     }
 
     function finishPoll() {
-        submitResults()
-        startCombat()
+        let newState = deepCopy(state)
+        submitResults(newState)
+        startCombat(newState)
+        setState(newState)
     }
 
     function inputChangeHandler(e) {

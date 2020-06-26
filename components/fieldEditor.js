@@ -1,17 +1,18 @@
 import { useRef } from "react";
+import deepCopy from "../util/deepcopy";
 
 export default function FieldEditor(props) {
     const { fieldName, placeHolder, state, setState } = props
     const inputRef = useRef(null)
 
     function updateField() {
-        const newState = {... state}
+        const newState = deepCopy(state)
         newState[fieldName] = inputRef.current.value
         setState(newState)
     }
 
     function deleteField() {
-        const newState = {... state}
+        const newState = deepCopy(state)
         newState[fieldName] = ''
         setState(newState)
     }

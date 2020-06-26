@@ -2,6 +2,7 @@ import css from "styled-jsx/css"
 import { useEffect, useState } from "react"
 import Modal, { renderToModal, clearModal } from "./modal"
 import InitiativePoll from "./initiativePoll"
+import deepCopy from "../util/deepcopy"
 
 const previewCss = css`
 .preview {
@@ -66,6 +67,15 @@ function loadPlayers() {
     return JSON.parse(localStorage.getItem('campaign')).players
 }
 
+function getPlayersFromState(state) {
+    let players = []
+    console.log(state)
+    for (let combatant of state.combat.combatants) {
+        if (combatant.type === 'player') players.push(combatant)
+    }
+    return players
+}
+
 export default function Preview(props) {
     const { label, image, enemies, state, setState } = props
     const [players, setPlayers] = useState(null)
@@ -73,27 +83,29 @@ export default function Preview(props) {
     const encounterBtnClasses = `actionButton ${enemiesPresent ? 'leftBtn' : 'centerBtn' }`
     const poll = <InitiativePoll state={state} setState={setState} startCombat={startCombat} players={players} />
 
-    function update(isCombat) {
-        console.log('Update called. State here is:', state)
-        const newState = {... state}
+    function update(isCombat, newState) {
+        const playersFromState = getPlayersFromState(newState)
+        const newPlayers = playersFromState.length > 0 ? playersFromState : players
+
         newState.imageLabel = label
         newState.imageUrl = image
-        newState.combat.combatants = (enemies ? [... enemies] : []).concat(players)
+        newState.combat.combatants = (enemies ? [... enemies] : []).concat(newPlayers)
         newState.combat.turn = 0
         newState.isCombat = isCombat
-        setState(newState)
     }
 
     function encounter() {
-        update(false)
+        let newState = deepCopy(state)
+        update(false, newState)
+        setState(newState)
     }
 
     function combat() {
         renderToModal(poll)
     }
 
-    function startCombat() {
-        update(true)
+    function startCombat(newState) {
+        update(true, newState)
         clearModal()
     }
 

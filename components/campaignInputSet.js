@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import CampaignSimpleInput from "./campaignSimpleInput"
 import css from "styled-jsx/css"
 import { blankCombatant, blankEncounter } from "../util/placeholders"
+import deepCopy from "../util/deepcopy"
 
 
 const elementGroupCss = css`
@@ -95,7 +96,7 @@ function Combat(props) {
     }
 
     function addBaddie() {
-        const newBaddie = {... blankCombatant}
+        const newBaddie = deepCopy(blankCombatant)
         newBaddie.type = 'enemy'
         setBaddies(baddies.concat(newBaddie))
 
@@ -208,12 +209,12 @@ export default function CampaignInputSet(props) {
         let campaign = JSON.parse(localStorage.getItem('campaign'))
         switch(setName) {
             case 'players':
-                const newPlayer = {... blankCombatant}
+                const newPlayer = deepCopy(blankCombatant)
                 newPlayer.type = 'player'
                 campaign['players'].push(newPlayer)
                 break
             case 'encounters':
-                campaign['encounters'].push({...blankEncounter})
+                campaign['encounters'].push(deepCopy(blankEncounter))
                 break
             default:
                 throw `Campaign input set must be one of 'players'|'encounters'. ${setName} given`

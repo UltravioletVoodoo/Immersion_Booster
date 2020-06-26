@@ -7,6 +7,7 @@ import css from "styled-jsx/css"
 import CampaignTitle from "../../components/campaignTitle";
 import { blankCampaign } from '../../util/placeholders';
 import CampaignNotesEditor from '../../components/campaignNotesEditor';
+import deepCopy from '../../util/deepcopy';
 
 const campaignEditorCss = css`
 .campaignEditor {
@@ -39,7 +40,7 @@ export default function CampaignEditor() {
     
     function saveDummyCampaign() {
         if (typeof window === 'undefined') return
-        const dummyCampaign = {... blankCampaign}
+        const dummyCampaign = deepCopy(blankCampaign)
         localStorage.setItem('campaign', JSON.stringify(dummyCampaign))
         return dummyCampaign
     }
