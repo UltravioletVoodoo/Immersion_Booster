@@ -5,7 +5,6 @@ export default function InitiativePoll(props) {
     const [playerIndex, setPlayerIndex] = useState(0)
     const [initiativePairs, setInitiativePairs] = useState([])
     const [inputValue, setInputValue] = useState('')
-    const [errorMsg, setErrorMsg] = useState('')
 
     function atEnd() {
         return playerIndex === players.length
@@ -22,23 +21,15 @@ export default function InitiativePoll(props) {
     }
 
     function submitResults() {
-        debugger;
-        // Match up our initiative pairs with players in the state and modify their initiatives
         let newState = {... state}
         for (let pair of initiativePairs) {
-            for (let combatantID in newState.combat.combatants) {
-                let combatant = newState.combat.combatants[combatantID]
+            for (let combatant of newState.combat.combatants) {
                 if (combatant.type !== 'player') continue
-                if (pair.name === combatant.name) {
-                    // Shoehorn in the new initiative value
-                    console.log(newState.combat.combatants[combatantID], pair.initiative)
-                    newState.combat.combatants[combatantID].initiative = pair.initiative
-                    console.log(newState.combat.combatants[combatantID], pair.initiative) // Change IS reflected here...
-
+                if (combatant.name === pair.name) {
+                    combatant.initiative = pair.initiative
                 }
             }
         }
-        console.log(newState) // hmmmmm the change is NOT reflected here...
         setState(newState)
     }
 

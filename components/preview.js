@@ -74,6 +74,7 @@ export default function Preview(props) {
     const poll = <InitiativePoll state={state} setState={setState} startCombat={startCombat} players={players} />
 
     function update(isCombat) {
+        console.log('Update called. State here is:', state)
         const newState = {... state}
         newState.imageLabel = label
         newState.imageUrl = image
