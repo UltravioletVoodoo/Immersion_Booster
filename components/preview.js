@@ -69,7 +69,6 @@ function loadPlayers() {
 
 function getPlayersFromState(state) {
     let players = []
-    console.log(state)
     for (let combatant of state.combat.combatants) {
         if (combatant.type === 'player') players.push(combatant)
     }

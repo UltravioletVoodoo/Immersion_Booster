@@ -15,7 +15,6 @@ export default function SelectedCharacterControls(props) {
 
     function removeFromSelection(name) {
         const newCharacters = selectedCharacters.filter(c => c !== name)
-        console.log(selectedCharacters, newCharacters)
         setSelectedCharacters(newCharacters)
     }
 
