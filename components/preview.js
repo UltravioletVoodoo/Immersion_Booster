@@ -83,12 +83,9 @@ export default function Preview(props) {
     const poll = <InitiativePoll state={state} setState={setState} startCombat={startCombat} players={players} />
 
     function update(isCombat, newState) {
-        const playersFromState = getPlayersFromState(newState)
-        const newPlayers = playersFromState.length > 0 ? playersFromState : players
-
         newState.imageLabel = label
         newState.imageUrl = image
-        newState.combat.combatants = (enemies ? [... enemies] : []).concat(newPlayers)
+        newState.combat.combatants = (enemies ? [... enemies] : []).concat(getPlayersFromState(newState))
         newState.combat.turn = 0
         newState.isCombat = isCombat
     }
@@ -109,7 +106,11 @@ export default function Preview(props) {
     }
 
     useEffect(() => {
-        setPlayers(loadPlayers())
+        const newPlayers = loadPlayers()
+        setPlayers(newPlayers)
+        const newState = deepCopy(state)
+        newState.combat.combatants = (enemies ? enemies : []).concat(newPlayers)
+        setState(newState)
     }, [])
 
     return (
