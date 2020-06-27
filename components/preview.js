@@ -81,7 +81,6 @@ export default function Preview(props) {
     const [players, setPlayers] = useState(null)
     const enemiesPresent = checkEnemiesPresent(enemies)
     const encounterBtnClasses = `actionButton ${enemiesPresent ? 'leftBtn' : 'centerBtn' }`
-    const poll = <InitiativePoll state={state} setState={setState} startCombat={startCombat} players={players} />
 
     function update(isCombat, newState) {
         newState.imageLabel = label
@@ -98,7 +97,7 @@ export default function Preview(props) {
     }
 
     function combat() {
-        renderToModal(poll)
+        renderToModal(<InitiativePoll state={state} setState={setState} startCombat={startCombat} players={players} />)
     }
 
     function startCombat(newState) {

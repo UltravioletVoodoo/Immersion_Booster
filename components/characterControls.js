@@ -1,13 +1,22 @@
 import Control from "./control"
+import deepCopy from "../util/deepcopy"
+import { renderToModal, clearModal } from "./modal"
 
 export default function CharacterControls(props) {
     const { state, setState, selectedCharacters } = props
+
+    function killCharacters() {
+        let newState = deepCopy(state)
+        newState.combat.combatants = newState.combat.combatants.filter((combatant) => {return !selectedCharacters.includes(combatant.name)})
+        setState(newState)
+    }
+
 
     return (
         <>
             <div className='controls'>
                 <div className='controlBlock'>
-                    <Control label='Kill' icon='/chewed-skull.svg' onClick={() => console.log('Kill button was pressed')} />
+                    <Control label='Kill' icon='/chewed-skull.svg' onClick={killCharacters} />
                     <Control label='Modify' icon='/potion-ball.svg' onClick={() => console.log('Affect button was pressed')} />
                 </div>
                 <div className='controlBlock'>
