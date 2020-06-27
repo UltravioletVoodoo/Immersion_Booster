@@ -4,14 +4,15 @@ import shorten from "../util/textShortener"
 
 
 export default function InitiativeChar(props) {
-    const { id, name, playerName, myTurn, isAdmin } = props
+    const { combatant, myTurn, isAdmin } = props
+    const { name, playerName, initiative } = combatant
     const initiativeCharRef = useRef(null)
 
     return (
         <>
             <div ref={initiativeCharRef} className='initiativeChar'>
                 <div className='order'>
-                    <span className='text orderText'>{parseInt(id) + 1}</span>
+                    <span className='text orderText'>{initiative}</span>
                 </div>
                 <div className='name'>
                     <span className='text nameText'>{shorten(name, 20)}</span>

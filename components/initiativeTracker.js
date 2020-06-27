@@ -9,9 +9,7 @@ export default function InitiativeTracker(props) {
         charList.push(
             <InitiativeChar 
                 key={charId}
-                id={parseInt(charId)}
-                playerName={combatants[charId].playerName}
-                name={combatants[charId].name}
+                combatant={combatants[charId]}
                 myTurn={turn === parseInt(charId)}
                 isAdmin={isAdmin}
             />
