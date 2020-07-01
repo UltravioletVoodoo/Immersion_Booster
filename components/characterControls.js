@@ -3,6 +3,8 @@ import deepCopy from "../util/deepcopy"
 import { renderToModal, clearModal } from "./modal"
 import InsertionForm from "./insertionForm"
 import { statusEffect } from "../util/placeholders"
+import HealForm from "./healForm"
+import ModifyHpForm from "./modifyHpForm"
 
 export default function CharacterControls(props) {
     const { state, setState, selectedCharacters } = props
@@ -19,6 +21,39 @@ export default function CharacterControls(props) {
             killCharacter(charToKill, newState)
         }
         setState(newState)
+    }
+
+    function affectCharacters() {
+
+    }
+
+    function modifyHitpoints(ids, value) {
+        let newState = deepCopy(state)
+
+        for (let id of ids) {
+            newState.combat.combatants[id].health = (parseInt(newState.combat.combatants[id].health) + value).toString()
+        }
+        setState(newState)
+        clearModal()
+    }
+
+    function modifyHealthBase(negative) {
+        let ids = []
+        for (let characterToModify of selectedCharacters) {
+            const combatantId = state.combat.combatants.findIndex((c) => c.name === characterToModify)
+            const combatant = state.combat.combatants[combatantId]
+            if (combatant.type !== 'enemy') continue
+            ids.push(combatantId)
+        }
+        renderToModal(<ModifyHpForm ids={ids} modify={modifyHitpoints} negative={negative} />)
+    }
+
+    function healCharacters() {
+        modifyHealthBase(false)
+    }
+
+    function harmCharacters() {
+        modifyHealthBase(true)
     }
 
     function getFirstSelectedCharacter() {
@@ -80,11 +115,11 @@ export default function CharacterControls(props) {
             <div className='controls'>
                 <div className='controlBlock'>
                     <Control label='Kill' icon='/chewed-skull.svg' onClick={killCharacters} />
-                    <Control label='Modify' icon='/potion-ball.svg' onClick={() => console.log('Affect button was pressed')} />
+                    <Control label='Modify' icon='/potion-ball.svg' onClick={affectCharacters} />
                 </div>
                 <div className='controlBlock'>
-                    <Control label='Heal' icon='/heart-plus.svg' onClick={() => console.log('Heal button was pressed')} />
-                    <Control label='Harm' icon='/heart-minus.svg' onClick={() => console.log('Harm button was pressed')} />
+                    <Control label='Heal' icon='/heart-plus.svg' onClick={healCharacters} />
+                    <Control label='Harm' icon='/heart-minus.svg' onClick={harmCharacters} />
                 </div>
                 <div className='controlBlock'>
                     <Control label='Insert Before' icon='/player-previous.svg' onClick={insertBefore} />
