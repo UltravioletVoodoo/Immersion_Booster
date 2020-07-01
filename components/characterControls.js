@@ -2,16 +2,22 @@ import Control from "./control"
 import deepCopy from "../util/deepcopy"
 import { renderToModal, clearModal } from "./modal"
 import InsertionForm from "./insertionForm"
-import adjustTurn from "../util/adjustTurn"
+import { statusEffect } from "../util/placeholders"
 
 export default function CharacterControls(props) {
     const { state, setState, selectedCharacters } = props
 
-    function killCharacters() {
-        if (selectedCharacters.length === 0) return
-        let newState = deepCopy(state)
+    function killCharacter(character, newState) {
+        const index = newState.combat.combatants.findIndex((c) => c.name === character)
+        newState.combat.combatants = newState.combat.combatants.filter((c) => c.name !== character)
+        if (index < newState.combat.turn) newState.combat.turn -= 1
+    }
 
-        newState.combat.combatants = newState.combat.combatants.filter((combatant) => {return !selectedCharacters.includes(combatant.name)})
+    function killCharacters() {
+        let newState = deepCopy(state)
+        for (let charToKill of selectedCharacters) {
+            killCharacter(charToKill, newState)
+        }
         setState(newState)
     }
 
@@ -42,8 +48,6 @@ export default function CharacterControls(props) {
             newState.combat.combatants.splice(id, 0, combatant)
         }
 
-        // Adjust for turn breakage
-        adjustTurn(newState, currentTurn)
         setState(newState)
         clearModal()
     }
