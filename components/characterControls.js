@@ -39,13 +39,13 @@ export default function CharacterControls(props) {
 
     function insert(id, combatant) {
         let newState = deepCopy(state)
-        const currentTurn = newState.combat.combatants[newState.combat.turn].name
 
         // Inserting after the last combatant is a simple case
         if (newState.combat.combatants.length === id) {
             newState.combat.combatants.push(combatant)
         } else {
             newState.combat.combatants.splice(id, 0, combatant)
+            if (id <= newState.combat.turn) newState.combat.turn += 1
         }
 
         setState(newState)
