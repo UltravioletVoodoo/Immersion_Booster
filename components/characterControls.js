@@ -2,9 +2,8 @@ import Control from "./control"
 import deepCopy from "../util/deepcopy"
 import { renderToModal, clearModal } from "./modal"
 import InsertionForm from "./insertionForm"
-import { statusEffect } from "../util/placeholders"
-import HealForm from "./healForm"
 import ModifyHpForm from "./modifyHpForm"
+import AffectForm from "./affectForm"
 
 export default function CharacterControls(props) {
     const { state, setState, selectedCharacters } = props
@@ -23,8 +22,38 @@ export default function CharacterControls(props) {
         setState(newState)
     }
 
-    function affectCharacters() {
+    function addAffect(ids, condition) {
+        let newState = deepCopy(state)
+        for (let id of ids) {
+            newState.combat.combatants[id].status.push(condition)
+        }
+        setState(newState)
+    }
 
+    function removeAffect(ids, condition) {
+        let newState = deepCopy(state)
+        for (let id of ids) {
+            newState.combat.combatants[id].status = newState.combat.combatants[id].status.filter((s) => s !== condition)
+        }
+        setState(newState)
+    }
+
+    function applyAffects(ids, condition, isAdding) {
+        if (isAdding) {
+            addAffect(ids, condition)
+        } else {
+            removeAffect(ids, condition)
+        }
+        clearModal()
+    }
+
+    function affectCharacters() {
+        let ids = []
+        for (let characterToAffect of selectedCharacters) {
+            const combatantId = state.combat.combatants.findIndex((c) => c.name === characterToAffect)
+            ids.push(combatantId)
+        }
+        renderToModal(<AffectForm ids={ids} apply={applyAffects} />)
     }
 
     function modifyHitpoints(ids, value) {
