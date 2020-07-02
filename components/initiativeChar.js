@@ -5,8 +5,10 @@ import shorten from "../util/textShortener"
 
 export default function InitiativeChar(props) {
     const { combatant, myTurn, isAdmin } = props
-    const { name, playerName, initiative } = combatant
+    const { name, playerName, initiative, status } = combatant
     const initiativeCharRef = useRef(null)
+
+    const statusEffects = status.map((s) => <img className='statusEffect' src={s} ></img>)
 
     return (
         <>
@@ -20,6 +22,11 @@ export default function InitiativeChar(props) {
                         <span className='text playerNameText'>{shorten(playerName, 10)}</span>
                     )}
                 </div>
+                {statusEffects.length > 0 && (
+                <div className='statusEffects'>
+                    {status.map((s) => <img className='statusEffect' src={s} ></img>)}
+                </div>
+                )}
             </div>
             <style jsx>{`
                 .initiativeChar {
@@ -68,6 +75,19 @@ export default function InitiativeChar(props) {
                     transform: translateY(-50%);
                     font-size: ${isAdmin ? '12' : '20'}px;
                     color: salmon;
+                }
+                .statusEffects {
+                    position: absolute;
+                    width: 100%;
+                    height: ${isAdmin ? '20' : '40'}px;
+                    top: -${isAdmin ? '10' : '20'}px;
+                    text-align: right;
+                }
+                .statusEffect {
+                    position: relative;
+                    width: ${isAdmin ? '20' : '40'}px;
+                    height: ${isAdmin ? '20' : '40'}px;
+                    margin-right: ${isAdmin ? '2' : '5'}px;
                 }
             `}</style>
         </>
