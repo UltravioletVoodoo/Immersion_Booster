@@ -61,6 +61,9 @@ export default function CharacterControls(props) {
 
         for (let id of ids) {
             newState.combat.combatants[id].health = (parseInt(newState.combat.combatants[id].health) + value).toString()
+            if (parseInt(newState.combat.combatants[id].health) <= 0) {
+                killCharacter(newState.combat.combatants[id].name, newState)
+            }
         }
         setState(newState)
         clearModal()
