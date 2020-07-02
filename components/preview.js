@@ -4,6 +4,7 @@ import Modal, { renderToModal, clearModal } from "./modal"
 import InitiativePoll from "./initiativePoll"
 import deepCopy from "../util/deepcopy"
 import initiativeSort from "../util/initiativeSort"
+import charPreProcessing from "../util/charPreProcessing"
 
 const previewCss = css`
 .preview {
@@ -85,7 +86,7 @@ export default function Preview(props) {
     function update(isCombat, newState) {
         newState.imageLabel = label
         newState.imageUrl = image
-        newState.combat.combatants = initiativeSort((enemies ? [... enemies] : []).concat(getPlayersFromState(newState)))
+        newState.combat.combatants = charPreProcessing((enemies ? [... enemies] : []).concat(getPlayersFromState(newState)))
         newState.combat.turn = 0
         newState.isCombat = isCombat
     }
