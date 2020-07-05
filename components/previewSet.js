@@ -21,7 +21,7 @@ const previewSetElementCss = css`
 `
 
 function PreviewSetElement(props) {
-    const { id, label, image, enemies, state, setState } = props
+    const { id, label, soundEffect, image, enemies, state, setState } = props
     return (
         <>
             <div className='previewSetElement'>
@@ -29,6 +29,7 @@ function PreviewSetElement(props) {
                     key={id} 
                     label={label} 
                     image={image} 
+                    soundEffect={soundEffect}
                     enemies={enemies} 
                     state={state} 
                     setState={setState}
@@ -49,6 +50,7 @@ export default function PreviewSet(props) {
             id={previewId} 
             label={set[previewId].imageLabel} 
             image={set[previewId].imageUrl} 
+            soundEffect={set[previewId].soundEffect}
             enemies={set[previewId].combatants} 
             state={state} 
             setState={setState}

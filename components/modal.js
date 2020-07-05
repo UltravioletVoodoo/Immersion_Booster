@@ -11,8 +11,7 @@ export function clearModal() {
 }
 
 
-export default function Modal(props) {
-    const { } = props
+export default function Modal() {
     var [ content, setContent ] = useState(undefined)
     modalHandler = setContent
     

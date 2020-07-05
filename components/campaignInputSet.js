@@ -160,6 +160,9 @@ function Encounter(props) {
                 <div className='input'>
                     <CampaignSimpleInput path={basePath.concat('imageUrl')} placeholder='Encounter Image URL' />
                 </div>
+                <div className='input'>
+                    <CampaignSimpleInput path={basePath.concat('soundEffect')} placeholder='Sound Effect URL' />
+                </div>
                 <button onClick={toggleCombat}>{combat ? 'Delete' : 'Add'} Combat</button>
                 <button onClick={deleteMe}>Delete</button>
                 {combat && (

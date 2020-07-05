@@ -8,6 +8,7 @@ import Viewer from '../../components/viewer'
 import CampaignNotes from '../../components/campaignNotes'
 import LiveEditors from '../../components/liveEditors'
 import Modal from '../../components/modal'
+import SoundEffect from '../../components/soundEffect'
 
 
 const AdminCss = css`
@@ -75,6 +76,7 @@ export default function Admin() {
             </Head>
             <Base />
             <Modal />
+            <SoundEffect />
             <div className='manualEditors'>
                 <LiveEditors state={state} setState={setState} />
             </div>

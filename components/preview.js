@@ -5,6 +5,7 @@ import InitiativePoll from "./initiativePoll"
 import deepCopy from "../util/deepcopy"
 import initiativeSort from "../util/initiativeSort"
 import charPreProcessing from "../util/charPreProcessing"
+import { playSoundEffect } from "./soundEffect"
 
 const previewCss = css`
 .preview {
@@ -78,12 +79,13 @@ function getPlayersFromState(state) {
 }
 
 export default function Preview(props) {
-    const { label, image, enemies, state, setState } = props
+    const { label, image, soundEffect, enemies, state, setState } = props
     const [players, setPlayers] = useState(null)
     const enemiesPresent = checkEnemiesPresent(enemies)
     const encounterBtnClasses = `actionButton ${enemiesPresent ? 'leftBtn' : 'centerBtn' }`
 
     function update(isCombat, newState) {
+        playSoundEffect(soundEffect)
         newState.imageLabel = label
         newState.imageUrl = image
         newState.combat.combatants = charPreProcessing((enemies ? [... enemies] : []).concat(getPlayersFromState(newState)))
