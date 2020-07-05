@@ -1,22 +1,19 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import deepCopy from "../util/deepcopy";
 
 export default function FieldEditor(props) {
-    const { fieldName, state, setState } = props
+    const { fieldName, placeholder, state, setState } = props
     const [inputValue, setInputValue] = useState('')
 
+
     function updateField() {
+        console.log('updateField called...')
+        console.log('inputValue: ', inputValue)
         const newState = deepCopy(state)
         newState[fieldName] = inputValue
         setState(newState)
         clearInput()
-    }
-
-    function deleteField() {
-        const newState = deepCopy(state)
-        newState[fieldName] = ''
-        setState(newState)
-        clearInput()
+        console.log('updatedField Finished.')
     }
 
     function clearInput() {
@@ -27,13 +24,23 @@ export default function FieldEditor(props) {
         const newValue = e.target.value ? e.target.value : ''
         setInputValue(newValue)
     }
+    
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') updateField()
+    }
+
+    useEffect(() => {
+        window.addEventListener('keyup', handleKeyPress)
+
+        return () => {
+            window.removeEventListener('keyup', handleKeyPress)
+        }
+    }, [inputValue])
 
     return (
         <>
             <div className='fieldEditor'>
-                <input className='fieldInput' value={inputValue} onChange={handleInputChange} placeholder={fieldName}></input>
-                <button className='fieldBtn' onClick={updateField}>Update {fieldName}</button>
-                <button className='fieldBtn' onClick={deleteField}>Delete {fieldName}</button>
+                <input className='fieldInput' value={inputValue} onChange={handleInputChange} placeholder={placeholder}></input>
             </div>
             <style jsx>{`
                 .fieldEditor {
@@ -43,11 +50,10 @@ export default function FieldEditor(props) {
                     text-align: center;
                 }
                 .fieldInput {
-                    display: block;
+                    position: relative;
+                    margin-bottom: 10px;
                     width: 100%;
-                }
-                .fieldBtn {
-                    width: 50%;
+                    height: 20px;
                 }
             `}</style>
         </>
