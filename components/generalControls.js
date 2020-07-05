@@ -11,8 +11,8 @@ export default function GeneralControls(props) {
             </div>
             <div className='controlsContainer'>
                 <div className='fieldContainer'>
-                    <FieldEditor fieldName='imageUrl' placeholder='Image URL' state={state} setState={setState} />
-                    <FieldEditor fieldName='imageLabel' placeholder='Label Text' state={state} setState={setState} />
+                    <FieldEditor fieldName='imageUrl' state={state} setState={setState} />
+                    <FieldEditor fieldName='imageLabel' state={state} setState={setState} />
                 </div>
                 <div className='nextTurnContainer'>
                     <NextTurn state={state} setState={setState} />
