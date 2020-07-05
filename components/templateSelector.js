@@ -17,7 +17,6 @@ export default function TemplateSelector(props) {
 
     function handleFileRead() {
         const content = fileReader.result
-        console.log(content)
         localStorage.setItem('campaign', content)
     }
 

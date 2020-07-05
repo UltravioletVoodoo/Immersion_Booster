@@ -7,13 +7,10 @@ export default function FieldEditor(props) {
 
 
     function updateField() {
-        console.log('updateField called...')
-        console.log('inputValue: ', inputValue)
         const newState = deepCopy(state)
         newState[fieldName] = inputValue
         setState(newState)
         clearInput()
-        console.log('updatedField Finished.')
     }
 
     function clearInput() {
