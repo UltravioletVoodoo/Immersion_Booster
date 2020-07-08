@@ -33,7 +33,7 @@ const AdminCss = css`
     left: 0;
     right: 50vw;
     bottom: 0;
-    background-color: darkcyan;
+    background-color: #2e2e2e;
 }
 .campaignNotes {
     position: fixed;
