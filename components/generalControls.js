@@ -1,43 +1,28 @@
 import FieldEditor from "./fieldEditor"
 import NextTurn from "./nextTurn"
+import TitledBox from "./titledBox"
 
 export default function GeneralControls(props) {
     const { state, setState } = props
 
     return (
         <>
-            <div className='generalControlsTitle'>
-                <div className='generalControlsTitleText'>General Controls</div>
-            </div>
-            <div className='controlsContainer'>
-                <div className='fieldContainer'>
-                    <FieldEditor fieldName='imageUrl' state={state} setState={setState} placeholder='Image URL' />
-                    <FieldEditor fieldName='imageLabel' state={state} setState={setState} placeholder='Image Label' />
+            <TitledBox text='General Controls'>
+                <div className='controlsContainer'>
+                    <div className='fieldContainer'>
+                        <FieldEditor fieldName='imageUrl' state={state} setState={setState} placeholder='Image URL' />
+                        <FieldEditor fieldName='imageLabel' state={state} setState={setState} placeholder='Image Label' />
+                    </div>
+                    <div className='nextTurnContainer'>
+                        <NextTurn state={state} setState={setState} />
+                    </div>
                 </div>
-                <div className='nextTurnContainer'>
-                    <NextTurn state={state} setState={setState} />
-                </div>
-            </div>
+            </TitledBox>
             <style jsx>{`
-                .generalControlsTitle {
-                    width: 100%;
-                    height: 25px;
-                    position: absolute;
-                    text-align: center;
-                    border-bottom: 1px solid black;
-                }
-                .generalControlsTitleText {
-                    font-size: 16px;
-                    position: absolute;
-                    width: 100%;
-                    top: 50%;
-                    transform: translateY(-50%);
-                }
                 .controlsContainer {
                     position: absolute;
                     width: 100%;
-                    height: calc(100% - 25px);
-                    top: 25px;
+                    height: 100%;
                 }
                 .fieldContainer {
                     position: absolute;

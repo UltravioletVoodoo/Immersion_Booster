@@ -2,6 +2,7 @@ import Control from "./control"
 import { useState } from "react"
 import CombatantSelection from "./combatantSelection"
 import CharacterControls from "./characterControls"
+import TitledBox from "./titledBox"
 
 export default function SelectedCharacterControls(props) {
     const { state, setState } = props
@@ -28,25 +29,24 @@ export default function SelectedCharacterControls(props) {
 
     return (
         <>
-            <div className='selectedCharacterControlsTitle'>
-                <div className='selectedCharacterControlsTitleText'>Initiative Tracker Controls</div>
-            </div>
-            {state.isCombat ? (
-                <div className='controlsContainer'>
-                        <div className='characterSelector'>
-                            {state.combat.combatants.map((c, i) => (
-                                <CombatantSelection key={i} combatant={c} isSelected={selectedCharacters.includes(c.name)} onClick={toggleSelection} />
-                            ))}
-                        </div>
-                        <div className='characterControls'>
-                            <CharacterControls state={state} setState={setState} selectedCharacters={selectedCharacters} />
-                        </div>
-                </div>
-            ) : (
-                <div className='startCombat'>
-                    <img src='/swords-emblem.svg'></img>
-                </div>
-            )}
+            <TitledBox text='Initiative Tracker Controls' leftBorder>
+                {state.isCombat ? (
+                    <div className='controlsContainer'>
+                            <div className='characterSelector'>
+                                {state.combat.combatants.map((c, i) => (
+                                    <CombatantSelection key={i} combatant={c} isSelected={selectedCharacters.includes(c.name)} onClick={toggleSelection} />
+                                ))}
+                            </div>
+                            <div className='characterControls'>
+                                <CharacterControls state={state} setState={setState} selectedCharacters={selectedCharacters} />
+                            </div>
+                    </div>
+                ) : (
+                    <div className='startCombat'>
+                        <img src='/swords-emblem.svg'></img>
+                    </div>
+                )}
+            </TitledBox>
             <style jsx>{`
                 .startCombat {
                     width: 150px;
@@ -59,8 +59,6 @@ export default function SelectedCharacterControls(props) {
                 .controlsContainer {
                     position: absolute;
                     width: 100%;
-                    height: calc(100% - 25px);
-                    top: 25px;
                 }
                 .characterSelector {
                     width: 50%;
@@ -73,20 +71,6 @@ export default function SelectedCharacterControls(props) {
                     left: 50%;
                     top: 0;
                     width: 50%;
-                }
-                .selectedCharacterControlsTitle {
-                    width: 100%;
-                    height: 25px;
-                    position: absolute;
-                    text-align: center;
-                    border-bottom: 1px solid black;
-                }
-                .selectedCharacterControlsTitleText {
-                    font-size: 16px;
-                    position: absolute;
-                    width: 100%;
-                    top: 50%;
-                    transform: translateY(-50%);
                 }
             `}</style>
         </>
