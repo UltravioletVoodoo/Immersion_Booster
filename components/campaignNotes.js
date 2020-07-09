@@ -19,12 +19,21 @@ export default function CampaignNotes() {
 
     return (
         <>
-            <div dangerouslySetInnerHTML={{ __html: notes}} className='campaignNotes' />
+            <div className='campaignNotesContainer'>
+                <div dangerouslySetInnerHTML={{ __html: notes}} className='campaignNotes' />
+            </div>
             <style jsx>{`
-                .campaignNotes {
+                .campaignNotesContainer {
+                    position: absolute;
                     width: 100%;
                     height: 100%;
                     overflow-y: scroll;
+                }
+                .campaignNotes {
+                    position: absolute;
+                    left: 10%;
+                    width: 80%;
+                    height: 100%;
                 }
             `}</style>
         </>
