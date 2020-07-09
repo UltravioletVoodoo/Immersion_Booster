@@ -1,5 +1,5 @@
 export default function TitledBox(props) {
-    const { text, small=true, children, leftBorder=false, bottomBorder=false } = props
+    const { text, children, small=false, leftBorder=false, bottomBorder=false } = props
 
     return (
         <>

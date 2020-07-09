@@ -18,7 +18,7 @@ export default function CampaignEditor(props) {
 
     return (
         <>
-            <TitledBox text='Campaign Editor'>
+            <TitledBox text='Campaign Editor' small>
                 <Link href='/admin/campaignEditor'>
                     <button>Edit Campaign</button>
                 </Link>

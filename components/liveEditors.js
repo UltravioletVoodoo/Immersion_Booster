@@ -7,7 +7,7 @@ export default function LiveEditors(props) {
 
     return (
         <>
-            <TitledBox text='Live Editors' small={false}>
+            <TitledBox text='Live Editors'>
                 <div className='liveEditor liveControls'>
                     <GeneralControls state={state} setState={setState} />
                 </div>

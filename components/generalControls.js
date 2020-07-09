@@ -7,7 +7,7 @@ export default function GeneralControls(props) {
 
     return (
         <>
-            <TitledBox text='General Controls'>
+            <TitledBox text='General Controls' small>
                 <div className='controlsContainer'>
                     <div className='fieldContainer'>
                         <FieldEditor fieldName='imageUrl' state={state} setState={setState} placeholder='Image URL' />

@@ -29,7 +29,7 @@ export default function SelectedCharacterControls(props) {
 
     return (
         <>
-            <TitledBox text='Initiative Tracker Controls' leftBorder>
+            <TitledBox text='Initiative Tracker Controls' leftBorder small>
                 {state.isCombat ? (
                     <div className='controlsContainer'>
                             <div className='characterSelector'>
