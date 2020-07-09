@@ -33,7 +33,7 @@ export default function GeneralControls(props) {
                 .nextTurnContainer {
                     position: absolute;
                     left: 50%;
-                    top: 75%;
+                    top: 50%;
                     transform: translateX(-50%);
                 }
             `}</style>

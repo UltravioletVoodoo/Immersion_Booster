@@ -1,4 +1,5 @@
 import deepCopy from "../util/deepcopy"
+import MyButton from '../components/myButton'
 
 
 export default function NextTurn(props) {
@@ -15,6 +16,6 @@ export default function NextTurn(props) {
     }
 
     return (
-        <button onClick={incrementTurn}>Next Turn</button>
+        <MyButton text='Next Turn' onClick={incrementTurn} color='cyan' hoverColor='pink' />
     )
 }
