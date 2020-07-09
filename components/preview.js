@@ -1,60 +1,9 @@
-import css from "styled-jsx/css"
 import { useEffect, useState } from "react"
-import Modal, { renderToModal, clearModal } from "./modal"
+import { renderToModal, clearModal } from "./modal"
 import InitiativePoll from "./initiativePoll"
 import deepCopy from "../util/deepcopy"
-import initiativeSort from "../util/initiativeSort"
 import charPreProcessing from "../util/charPreProcessing"
 import { playSoundEffect } from "./soundEffect"
-
-const previewCss = css`
-.preview {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    border: 1px solid black;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.5s;
-}
-.preview:hover {
-    box-shadow: 0 0 10px black;
-}
-.previewLabel {
-    font-size: 20px;
-    position: absolute;
-    top: 0;
-    width: 100px;
-    left: calc(50% - 50px);
-}
-.previewImage {
-    height: 100%;
-    width: auto;
-}
-.actionButton {
-    width: 25%;
-    height: 25%;
-    top: 50%;
-    z-index: 2;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    transition: 0.5s;
-    opacity: 0.4;
-}
-.actionButton:hover {
-    opacity: 1;
-}
-.leftBtn {
-    left: 25%;
-}
-.rightBtn {
-    left: 75%;
-}
-.centerBtn {
-    left: 50%;
-}
-`
 
 function checkEnemiesPresent(enemies) {
     try {
@@ -82,7 +31,7 @@ export default function Preview(props) {
     const { label, image, soundEffect, enemies, state, setState } = props
     const [players, setPlayers] = useState(null)
     const enemiesPresent = checkEnemiesPresent(enemies)
-    const encounterBtnClasses = `actionButton ${enemiesPresent ? 'leftBtn' : 'centerBtn' }`
+    const encounterClasses = `actionBtn ${enemiesPresent ? 'left' : 'center'}`
 
     function update(isCombat, newState) {
         playSoundEffect(soundEffect)
@@ -121,12 +70,61 @@ export default function Preview(props) {
             <div className='preview'>
                 <label className='previewLabel'>{label}</label>
                 <img className='previewImage' src={image}></img>
-                <img className={encounterBtnClasses} src='/scroll-quill.svg' onClick={encounter}></img>
-                {enemiesPresent && (
-                    <img className='actionButton rightBtn' src='/swords-emblem.svg' onClick={combat}></img>
-                )}
+                <div className='actionBtns'>
+                    <img className={encounterClasses} src='/scroll-quill.svg' onClick={encounter}></img>
+                    {enemiesPresent && (
+                        <img className='actionBtn right' src='/swords-emblem.svg' onClick={combat}></img>
+                    )}
+                </div>
             </div>
-            <style jsx>{previewCss}</style>
+            <style jsx>{`
+                .preview {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    background-color: cyan;
+                }
+                .previewLabel {
+                    display: block;
+                    width: 100%;
+                    height: 20%;
+                    border-bottom: 1px solid black;
+                }
+                .previewImage {
+                    position: absolute;
+                    left: 0;
+                    width: 25%;
+                    height: 80%;
+                    overflow-y: hidden;
+                }
+                .actionBtns {
+                    position: absolute;
+                    left: 25%;
+                    width: 75%;
+                    height: 80%;
+                    background-color: pink;
+                }
+                .actionBtn {
+                    position: absolute;
+                    width: 25%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    opacity: 0.5;
+                    transition: 0.5s;
+                }
+                .actionBtn:hover {
+                    opacity: 1;
+                }
+                .left {
+                    left: 25%;
+                }
+                .center {
+                    left: 50%;
+                }
+                .right {
+                    left: 75%;
+                }
+            `}</style>
         </>
     )
 }

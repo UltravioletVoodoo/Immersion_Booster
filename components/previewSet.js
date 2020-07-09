@@ -13,9 +13,7 @@ const previewSetElementCss = css`
 .previewSetElement {
     position: relative;
     height: 100px;
-    width: 100px;
-    left: 50%;
-    /* transform: translateX(-50%); */
+    width: 100%;
     margin-bottom: 10px;
 }
 `
