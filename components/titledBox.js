@@ -1,5 +1,5 @@
 export default function TitledBox(props) {
-    const { text, small=true, children, leftBorder=false } = props
+    const { text, small=true, children, leftBorder=false, bottomBorder=false } = props
 
     return (
         <>
@@ -17,6 +17,7 @@ export default function TitledBox(props) {
                     width: 100%;
                     height: 100%;
                     ${leftBorder ? 'border-left: 1px solid black;' : ''}
+                    ${bottomBorder ? 'border-bottom: 1px solid black;' : ''}
                 }
                 .titledBoxTitleContainer {
                     position: absolute;

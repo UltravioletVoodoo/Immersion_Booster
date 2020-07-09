@@ -24,7 +24,7 @@ export default function CampaignTools(props) {
 
     return (
         <>
-            <TitledBox text='Campaign Tools' small={false} leftborder>
+            <TitledBox text='Campaign Tools' small={false} leftBorder bottomBorder>
                 <div className='campaignToolsBase campaignControls'>
                     <CampaignEditor exportCampaign={exportCampaign} />
                 </div>
