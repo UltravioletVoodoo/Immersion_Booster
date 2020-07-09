@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Base from '../../components/base'
 import css from "styled-jsx/css"
-import TemplateSelector from '../../components/templateSelector'
 import { useState, useEffect } from 'react'
 import { blankState } from '../../util/placeholders'
 import Viewer from '../../components/viewer'
@@ -9,6 +8,7 @@ import CampaignNotes from '../../components/campaignNotes'
 import LiveEditors from '../../components/liveEditors'
 import Modal from '../../components/modal'
 import SoundEffect from '../../components/soundEffect'
+import CampaignTools from '../../components/campaignTools'
 
 
 const AdminCss = css`
@@ -19,7 +19,7 @@ const AdminCss = css`
     bottom: 50vh;
     right: 50vw;
 }
-.templateSelector {
+.campaignTools {
     position: fixed;
     top: 0;
     left: 50vw;
@@ -83,8 +83,8 @@ export default function Admin() {
             <div className='viewerPreview'>
                 <Viewer state={state} isAdmin={true} />
             </div>
-            <div className='templateSelector'>
-                <TemplateSelector state={state} setState={setState} />
+            <div className='campaignTools'>
+                <CampaignTools state={state} setState={setState} />
             </div>
             <div className='campaignNotes'>
                 <CampaignNotes />
