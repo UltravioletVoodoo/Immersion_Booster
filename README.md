@@ -1,21 +1,6 @@
 # Immersion_Booster
-A web based Dungeons and Dragons immersion booster
+A web based Dungeons and Dragons immersion booster. It is currently live [here](http://localhost:3000/)
 
 ## Concept
-- 2 screens: admin/player
-- admin contains controls
-- player shows results
+The app features a 2 tab design with an administrator tab and a viewer tab. The administrator tab is a controler for the viewer tab. Using the administrator tab, users can create representations of D&D campaigns and oneshots by loading images, audio files, notes, etc. These elements can then be displayed on the viewer tab to increase player immersion.
 
-## Ideas (player-facing)
-- NPC face (while roleplaying)
-- Dice roller
-- Crit fumble / critical hit screens
-- Effects
-- Monster appearance (outline with low perception or something maybe)
-- Turn indicator (shows intiative order too!)
-
-## Ideas (admin-facing)
-- Import JSON adventure assets
-- Mini version of what is showing on player-facing
-- Real-time controls for all the player-facing features
-- Link music with events? (combat / location / etc)
